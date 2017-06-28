@@ -4,7 +4,7 @@ The detail will be published in ESA2017.
 This program uses [RSDic](https://code.google.com/archive/p/rsdic/) as a part of the data structure.
 
 # download and compile
-    $ git clone https://github.com/tkbtkysms/solca.git  
+    $ git clone https://github.com/tkbtkysms/solca.git  or wget https://github.com/tkbtkysms/solca/archive/master.zip
     $ cd solca/src/  
     $ make
 
