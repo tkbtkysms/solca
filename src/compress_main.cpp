@@ -30,7 +30,7 @@ using namespace std;
 int main(int argc, char *argv[])
 {
   cmdline::parser p;
-  p.add<string>("input_file",  'i', "input file name",  false, "stream_mode");
+  p.add<string>("input_file",  'i', "input file name",  true);
   p.add<string>("output_file", 'o', "output file name", true);
   p.add<bool>  ("erase_br",    'e', "erase line break", false);
 
