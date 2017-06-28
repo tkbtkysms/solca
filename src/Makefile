@@ -1,4 +1,4 @@
-CXX = g++-7
+CXX = g++
 CXXFLAGS = -std=c++11 -O3 -W -Wall -Wno-deprecated
 LINKFLAGS = -lm
 
