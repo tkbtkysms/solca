@@ -200,8 +200,8 @@ inline uint64_t OnlineBP::FwdCntOuter(uint64_t block_pos,
 				      uint64_t i)
 {
   uint64_t ret = 0;
-  uint64_t x;
-  uint32_t w;
+  uint64_t x = 0;
+  uint32_t w = 0;
   const uint64_t t = i/8 + 1;
   for (uint32_t j = 0; j < t; ++j) {
     if (j % 8 == 0) {
