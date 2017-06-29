@@ -8,7 +8,7 @@ This program uses [RSDic](https://code.google.com/archive/p/rsdic/) as a part of
     $ cd solca/src/  
     $ make
 
-# execution
+# executions
 ## compression
     $ ./compress --input_file=string --output_file=string [options] ...   
      options:  
