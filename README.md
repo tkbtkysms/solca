@@ -29,7 +29,7 @@ This program uses [RSDic](https://code.google.com/archive/p/rsdic/) as a part of
 Fully-Online Grammar Compression. SPIRE 2013: 218-229
 
 
-# additional experiments for [repetitive text collections of Pizza & chili corpus](http://pizzachili.dcc.uchile.cl/repcorpus/real/)
+# additional experiments for [repetitive texts of Pizza & chili corpus](http://pizzachili.dcc.uchile.cl/repcorpus/real/)
 The following compressors correspond to our ESA2017's paper.
 
 ## cere (440MB)
