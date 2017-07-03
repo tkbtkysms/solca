@@ -39,7 +39,7 @@ The following compressors correspond to our ESA2017's paper.
 |---|---|---|---|
 |FOLCA||||
 |FOLCA+||||
-|SOLCA||||
+|SOLCA|532.23|51.49|| 
 |SOLCA+CRD||||
 |LZD||||
 |Re-Pair||||
