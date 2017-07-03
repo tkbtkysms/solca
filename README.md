@@ -30,7 +30,7 @@ Fully-Online Grammar Compression. SPIRE 2013: 218-229
 
 
 # additional experiments for [repetitive texts of Pizza & chili corpus](http://pizzachili.dcc.uchile.cl/repcorpus/real/)
-We will show the following experiments in near future.
+We will show the following experiments in the near future.
 The following compressors correspond to our ESA2017's paper.
 
 ## cere (440MB)
