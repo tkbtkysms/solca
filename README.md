@@ -27,3 +27,105 @@ This program uses [RSDic](https://code.google.com/archive/p/rsdic/) as a part of
 # references
 [1] Shirou Maruyama, Yasuo Tabei, Hiroshi Sakamoto, Kunihiko Sadakane:  
 Fully-Online Grammar Compression. SPIRE 2013: 218-229
+
+
+# additional experiments for http://pizzachili.dcc.uchile.cl/repcorpus/real/ 
+The following compressors correspond to our ESA2017's paper.
+
+## cere (440MB)
+
+|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|---|---|---|---|
+|FOLCA||||
+|FOLCA+||||
+|SOLCA||||
+|SOLCA+CRD||||
+|LZD||||
+|Re-Pair||||
+
+##  core utils (196MB)
+
+|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|---|---|---|---|
+|FOLCA||||
+|FOLCA+||||
+|SOLCA||||
+|SOLCA+CRD||||
+|LZD||||
+|Re-Pair||||
+
+## einstein.de.txt (89MB)
+
+|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|---|---|---|---|
+|FOLCA||||
+|FOLCA+||||
+|SOLCA||||
+|SOLCA+CRD||||
+|LZD||||
+|Re-Pair||||
+
+## einstein.en.txt (446MB) 
+
+|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|---|---|---|---|
+|FOLCA||||
+|FOLCA+||||
+|SOLCA||||
+|SOLCA+CRD||||
+|LZD||||
+|Re-Pair||||
+## Escherichia_coli (108MB) 
+
+|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|---|---|---|---|
+|FOLCA||||
+|FOLCA+||||
+|SOLCA||||
+|SOLCA+CRD||||
+|LZD||||
+|Re-Pair||||
+
+## influenza (148MB)
+
+|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|---|---|---|---|
+|FOLCA||||
+|FOLCA+||||
+|SOLCA||||
+|SOLCA+CRD||||
+|LZD||||
+|Re-Pair||||
+
+## kernel (247MB)
+
+|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|---|---|---|---|
+|FOLCA||||
+|FOLCA+||||
+|SOLCA||||
+|SOLCA+CRD||||
+|LZD||||
+|Re-Pair||||
+
+## para (410MB)
+
+|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|---|---|---|---|
+|FOLCA||||
+|FOLCA+||||
+|SOLCA||||
+|SOLCA+CRD||||
+|LZD||||
+|Re-Pair||||
+
+## world_leaders (45MB)
+
+|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|---|---|---|---|
+|FOLCA||||
+|FOLCA+||||
+|SOLCA||||
+|SOLCA+CRD||||
+|LZD||||
+|Re-Pair||||
