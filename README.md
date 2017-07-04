@@ -30,7 +30,7 @@ FOLCA: [1].
 FOLCA+: FOLCA applying SOLCA's dynamic succinct tree.  
 SOLCA: Seciton 3.3 of [2].  
 SOLCA+CRD: Section 4 of [2].   
-LZD: the patricia tree　space construction of https://github.com/kg86/lzd.  
+LZD: the patriciaf tree　space construction of https://github.com/kg86/lzd.  
 Re-Pair: https://github.com/nicolaprezza/Re-Pair.  
 ## experiment environment
 OS: CentOS 6.9  
