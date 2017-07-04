@@ -26,17 +26,17 @@ This program uses [RSDic](https://code.google.com/archive/p/rsdic/) as a part of
   
 # additional experiments for [repetitive texts of Pizza & chili corpus](http://pizzachili.dcc.uchile.cl/repcorpus/real/)
 ## comparison methods
-FOLCA: [1].
-FOLCA+: FOLCA applying SOLCA's dynamic succinct tree.
-SOLCA: Seciton 3.3 of [2].
-SOLCA+CRD: Section 4 of [2]. 
-LZD: the patricia tree　space construction of https://github.com/kg86/lzd.
-Re-Pair: https://github.com/nicolaprezza/Re-Pair.
+FOLCA: [1].  
+FOLCA+: FOLCA applying SOLCA's dynamic succinct tree.  
+SOLCA: Seciton 3.3 of [2].  
+SOLCA+CRD: Section 4 of [2].   
+LZD: the patricia tree　space construction of https://github.com/kg86/lzd.  
+Re-Pair: https://github.com/nicolaprezza/Re-Pair.  
 ## experiment environment
-OS: CentOS 6.9
-CPU: Intel(R) Xeon(R) CPU E7-8837 @2.67GHz
-Memory: 1TB
-Compiler: gcc 6.2.1
+OS: CentOS 6.9  
+CPU: Intel(R) Xeon(R) CPU E7-8837 @2.67GHz  
+Memory: 1TB  
+Compiler: gcc 6.2.1  
 
 
 ## cere (440MB)
