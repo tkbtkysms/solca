@@ -41,7 +41,7 @@ The following compressors correspond to our ESA2017's paper.
 |FOLCA+|302.426|235.78|3.82|
 |SOLCA|532.23|60.45|3.82| 
 |SOLCA+CRD|183.66|82.45|3.82|
-|LZD|26.94|589.76||
+|LZD|26.94|589.76|5.92|
 |Re-Pair||||
 
 ##  core utils (196MB)
@@ -52,7 +52,7 @@ The following compressors correspond to our ESA2017's paper.
 |FOLCA+|152.09|206.46|6.04|
 |SOLCA|301.90|39.08|6.04|
 |SOLCA+CRD|82.98|61.09|6.04|
-|LZD|11.95|334.04||
+|LZD|11.95|334.04|8.96|
 |Re-Pair||||
 
 ## einstein.de.txt (89MB)
@@ -63,7 +63,7 @@ The following compressors correspond to our ESA2017's paper.
 |FOLCA+|57.48|6.75|0.38|
 |SOLCA|103.61|1.36|0.38|
 |SOLCA+CRD|14.77|23.36|0.38|
-|LZD|2.07|46.28||
+|LZD|2.07|46.28|0.66|
 |Re-Pair||||
 
 ## einstein.en.txt (446MB) 
@@ -74,7 +74,7 @@ The following compressors correspond to our ESA2017's paper.
 |FOLCA+|295.61|14.85|0.20|
 |SOLCA|548.43|3.29|0.20|
 |SOLCA+CRD|78.63|25.29|0.20|
-|LZD|9.79051|205.06||
+|LZD|9.79051|205.06|0.28|
 |Re-Pair||||
 ## Escherichia_coli (108MB) 
 
@@ -84,7 +84,7 @@ The following compressors correspond to our ESA2017's paper.
 |FOLCA+|79.28|226.43|14.14|
 |SOLCA|173.70|56.58|14.14|
 |SOLCA+CRD|67.42|78.58|14.14|
-|LZD|14.72|403.53||
+|LZD|14.72|403.53|20.98|
 |Re-Pair||||
 
 ## influenza (148MB)
@@ -95,7 +95,7 @@ The following compressors correspond to our ESA2017's paper.
 |FOLCA+|96.77|117.49|5.44|
 |SOLCA|196.95|22.92|5.44|
 |SOLCA+CRD|41.84|44.92|5.44|
-|LZD|8.39|215.49||
+|LZD|8.39|215.49|6.47|
 |Re-Pair||||
 
 ## kernel (247MB)
@@ -106,7 +106,7 @@ The following compressors correspond to our ESA2017's paper.
 |FOLCA+|185.50|106.76|2.55|
 |SOLCA|336.59|21.32|2.55|
 |SOLCA+CRD|102.55|43.32|2.55|
-|LZD|9.46|257.53||
+|LZD|9.46|257.53|4.20|
 |Re-Pair||||
 
 ## para (410MB)
@@ -117,7 +117,7 @@ The following compressors correspond to our ESA2017's paper.
 |FOLCA+|286.90|261.97|5.21|
 |SOLCA|522.65|72.46|5.21|
 |SOLCA+CRD|196.63|94.46|5.21|
-|LZD|30.92|693.93||
+|LZD|30.92|693.93|8.19|
 |Re-Pair||||
 
 ## world_leaders (45MB)
@@ -128,5 +128,5 @@ The following compressors correspond to our ESA2017's paper.
 |FOLCA+|28.51|29.74|4.26|
 |SOLCA|60.15|6.54|4.26|
 |SOLCA+CRD|10.46|28.54|4.26|
-|LZD|1.60|53.52||
+|LZD|1.60|53.52|5.41|
 |Re-Pair||||
