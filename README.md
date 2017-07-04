@@ -54,7 +54,7 @@ Compiler: gcc 6.2.1
 
 |compressor|compression time (sec)| memory consumption (MB)|compression ratio|
 |---|---|---|---|
-|FOLCA|222.17|104.34|6.04|
+|FOLCA|||6.04|
 |FOLCA+|152.09|206.46|6.04|
 |SOLCA|301.90|39.08|6.04|
 |SOLCA+CRD|82.98|61.09|6.04|
