@@ -39,9 +39,9 @@ The following compressors correspond to our ESA2017's paper.
 |---|---|---|---|
 |FOLCA||||
 |FOLCA+||||
-|SOLCA|532.23|51.49|| 
-|SOLCA+CRD||||
-|LZD||||
+|SOLCA|532.23|60.45|| 
+|SOLCA+CRD|183.66|82.45||
+|LZD|26.94|589.76||
 |Re-Pair||||
 
 ##  core utils (196MB)
@@ -50,9 +50,9 @@ The following compressors correspond to our ESA2017's paper.
 |---|---|---|---|
 |FOLCA||||
 |FOLCA+||||
-|SOLCA||||
-|SOLCA+CRD||||
-|LZD||||
+|SOLCA|301.90|39.08||
+|SOLCA+CRD|82.98|61.09||
+|LZD|11.95|334.04||
 |Re-Pair||||
 
 ## einstein.de.txt (89MB)
@@ -61,9 +61,9 @@ The following compressors correspond to our ESA2017's paper.
 |---|---|---|---|
 |FOLCA||||
 |FOLCA+||||
-|SOLCA||||
-|SOLCA+CRD||||
-|LZD||||
+|SOLCA|103.61|1.36||
+|SOLCA+CRD|14.77|23.36||
+|LZD|2.07|46.28||
 |Re-Pair||||
 
 ## einstein.en.txt (446MB) 
@@ -72,9 +72,9 @@ The following compressors correspond to our ESA2017's paper.
 |---|---|---|---|
 |FOLCA||||
 |FOLCA+||||
-|SOLCA||||
-|SOLCA+CRD||||
-|LZD||||
+|SOLCA|548.43|3.29||
+|SOLCA+CRD|78.63|25.29||
+|LZD|9.79051|205.06||
 |Re-Pair||||
 ## Escherichia_coli (108MB) 
 
@@ -82,9 +82,9 @@ The following compressors correspond to our ESA2017's paper.
 |---|---|---|---|
 |FOLCA||||
 |FOLCA+||||
-|SOLCA||||
-|SOLCA+CRD||||
-|LZD||||
+|SOLCA|173.70|56.58||
+|SOLCA+CRD|67.42|78.58||
+|LZD|14.72|403.53||
 |Re-Pair||||
 
 ## influenza (148MB)
@@ -93,9 +93,9 @@ The following compressors correspond to our ESA2017's paper.
 |---|---|---|---|
 |FOLCA||||
 |FOLCA+||||
-|SOLCA||||
-|SOLCA+CRD||||
-|LZD||||
+|SOLCA|196.95|22.92||
+|SOLCA+CRD|41.84|44.92||
+|LZD|8.39|215.49||
 |Re-Pair||||
 
 ## kernel (247MB)
@@ -104,9 +104,9 @@ The following compressors correspond to our ESA2017's paper.
 |---|---|---|---|
 |FOLCA||||
 |FOLCA+||||
-|SOLCA||||
-|SOLCA+CRD||||
-|LZD||||
+|SOLCA|336.59|21.32||
+|SOLCA+CRD|102.55|43.32||
+|LZD|9.46|257.53||
 |Re-Pair||||
 
 ## para (410MB)
@@ -115,9 +115,9 @@ The following compressors correspond to our ESA2017's paper.
 |---|---|---|---|
 |FOLCA||||
 |FOLCA+||||
-|SOLCA||||
-|SOLCA+CRD||||
-|LZD||||
+|SOLCA|522.65|72.46||
+|SOLCA+CRD|196.63|94.46||
+|LZD|30.92|693.93||
 |Re-Pair||||
 
 ## world_leaders (45MB)
@@ -126,7 +126,7 @@ The following compressors correspond to our ESA2017's paper.
 |---|---|---|---|
 |FOLCA||||
 |FOLCA+||||
-|SOLCA||||
-|SOLCA+CRD||||
-|LZD||||
+|SOLCA|60.15|6.54||
+|SOLCA+CRD|10.46|28.54||
+|LZD|1.60|53.52||
 |Re-Pair||||
