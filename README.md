@@ -24,7 +24,7 @@ This program uses [RSDic](https://code.google.com/archive/p/rsdic/) as a part of
        -o, --output_file        output file name (string)  
        -?, --help               print this message  
   
-# additional experiments for [repetitive texts of Pizza & chili corpus](http://pizzachili.dcc.uchile.cl/repcorpus/real/)
+# experiments for [repetitive texts of Pizza & chili corpus](http://pizzachili.dcc.uchile.cl/repcorpus/real/)
 ## comparison methods
 FOLCA: [1].  
 FOLCA+: FOLCA applying SOLCA's dynamic succinct tree.  
