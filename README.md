@@ -44,7 +44,7 @@ Compiler: gcc 6.2.1
 |compressor|compression time (sec)| memory consumption (MB)|compression ratio|
 |---|---|---|---|
 |FOLCA|428.65|168.24|3.82|
-|FOLCA+|303.879|168.19|3.82|
+|FOLCA+|303.88|168.19|3.82|
 |SOLCA|532.23|60.45|3.82| 
 |SOLCA+CRD|183.66|82.45|3.82|
 |LZD|26.94|589.76|5.92|
@@ -70,23 +70,23 @@ Compiler: gcc 6.2.1
 |SOLCA|103.61|1.36|0.38|
 |SOLCA+CRD|14.77|23.36|0.38|
 |LZD|2.07|46.28|0.66|
-|Re-Pair|234.214|464.48|0.19|
+|Re-Pair|234.21|464.48|0.19|
 
 ## einstein.en.txt (446MB) 
 
 |compressor|compression time (sec)| memory consumption (MB)|compression ratio|
 |---|---|---|---|
 |FOLCA|428.11|10.60|0.20|
-|FOLCA+|305.272|10.60|0.20|
+|FOLCA+|305.27|10.60|0.20|
 |SOLCA|548.43|3.29|0.20|
 |SOLCA+CRD|78.63|25.29|0.20|
-|LZD|9.79051|205.06|0.28|
+|LZD|9.79|205.06|0.28|
 |Re-Pair|1589.91|2417.14|0.10|
 ## Escherichia_coli (108MB) 
 
 |compressor|compression time (sec)| memory consumption (MB)|compression ratio|
 |---|---|---|---|
-|FOLCA|114.682|159.63|14.14|
+|FOLCA|114.68|159.63|14.14|
 |FOLCA+|81.31|159.58|14.14|
 |SOLCA|173.70|56.58|14.14|
 |SOLCA+CRD|67.42|78.58|14.14|
@@ -102,7 +102,7 @@ Compiler: gcc 6.2.1
 |SOLCA|196.95|22.92|5.44|
 |SOLCA+CRD|41.84|44.92|5.44|
 |LZD|8.39|215.49|6.47|
-|Re-Pair|578.318|960.61|2.67|
+|Re-Pair|578.32|960.61|2.67|
 
 ## kernel (247MB)
 
@@ -119,8 +119,8 @@ Compiler: gcc 6.2.1
 
 |compressor|compression time (sec)| memory consumption (MB)|compression ratio|
 |---|---|---|---|
-|FOLCA|419.355|192.01|5.21|
-|FOLCA+|289.316|191.97|5.21|
+|FOLCA|419.36|192.01|5.21|
+|FOLCA+|289.32|191.97|5.21|
 |SOLCA|522.65|72.46|5.21|
 |SOLCA+CRD|196.63|94.46|5.21|
 |LZD|30.92|693.93|8.19|
@@ -135,7 +135,7 @@ Compiler: gcc 6.2.1
 |SOLCA|60.15|6.54|4.26|
 |SOLCA+CRD|10.46|28.54|4.26|
 |LZD|1.60|53.52|5.41|
-|Re-Pair|103.039|242.38|1.71|
+|Re-Pair|103.0４|242.38|1.71|
 
 # references
 [1] Shirou Maruyama, Yasuo Tabei, Hiroshi Sakamoto, Kunihiko Sadakane:  
