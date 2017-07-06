@@ -139,7 +139,7 @@ Compiler: gcc 6.2.1
 
 # references
 [1] Shirou Maruyama, Yasuo Tabei, Hiroshi Sakamoto, Kunihiko Sadakane:  
-Fully-Online Grammar Compression. SPIRE 2013: 218-229
+Fully-Online Grammar Compression. SPIRE 2013, 218-229.
 
 [2] Yoshimasa Takabatake, Tomohiro I, Hiroshi Sakamoto:  
 A Space-Optimal Grammar Compression. ESA2017, to appear.
