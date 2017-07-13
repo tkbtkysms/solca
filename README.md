@@ -32,7 +32,6 @@ SOLCA: Seciton 3.3 of [2].
 SOLCA+CRD: Section 4 of [2] ← this implementation.   
 LZD: the patriciaf tree　space construction of https://github.com/kg86/lzd.  
 Re-Pair: https://github.com/nicolaprezza/Re-Pair.  
-MKRe-Pair: [3]
 
 ## experimental environment
 OS: CentOS 6.9  
