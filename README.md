@@ -51,7 +51,7 @@ Compiler: gcc 6.2.1
 |SOLCA+CRD|183.66|82.45|3.82|
 |LZD|26.94|589.76|5.92|
 |Re-Pair|4452.92|2835.01|1.93|
-|freq_FOLCA (bucket size 1M)||||
+[](|freq_FOLCA (bucket size 1M)||||)
 |freq_FOLCA (bucket size 10M)||||
 |freq_FOLCA (bucket size 100M)||||
 |lossy_FOLCA (block size 1M)|128.836|3.58||
@@ -59,7 +59,7 @@ Compiler: gcc 6.2.1
 |lossy_FOLCA (block size 100M)||||
 |MKRe-Pair (block size 1M)||||
 |MKRe-Pair (block size 10M)||||
-|MKRe-Pair (block size 100M)||||
+|MKRe-Pair (block size 100M)||||)
 
 ##  core utils (196MB)
 
@@ -71,7 +71,7 @@ Compiler: gcc 6.2.1
 |SOLCA+CRD|82.98|61.09|6.04|
 |LZD|11.95|334.04|8.96|
 |Re-Pair|1798.69|1175.77|2.77|
-|freq_FOLCA (bucket size 1M)||||
+[](|freq_FOLCA (bucket size 1M)||||
 |freq_FOLCA (bucket size 10M)||||
 |freq_FOLCA (bucket size 100M)||||
 |lossy_FOLCA (block size 1M)||||
@@ -79,7 +79,7 @@ Compiler: gcc 6.2.1
 |lossy_FOLCA (block size 100M)||||
 |MKRe-Pair (block size 1M)||||
 |MKRe-Pair (block size 10M)||||
-|MKRe-Pair (block size 100M)||||
+|MKRe-Pair (block size 100M)||||)
 
 
 ## einstein.de.txt (89MB)
@@ -192,10 +192,10 @@ Compiler: gcc 6.2.1
 |SOLCA+CRD|196.63|94.46|5.21|
 |LZD|30.92|693.93|8.19|
 |Re-Pair|5713.95|2639.39|2.74|
-[](|freq_FOLCA (bucket size 1M)||||
-|freq_FOLCA (bucket size 10M)||||
-|freq_FOLCA (bucket size 100M)||||
-|lossy_FOLCA (block size 1M)||||
+[](|freq_FOLCA (bucket size 1M)||||)
+[](|freq_FOLCA (bucket size 10M)||||)
+[](|freq_FOLCA (bucket size 100M)||||)
+[](|lossy_FOLCA (block size 1M)||||)
 |lossy_FOLCA (block size 10M)||||
 |lossy_FOLCA (block size 100M)||||
 |MKRe-Pair (block size 1M)||||
