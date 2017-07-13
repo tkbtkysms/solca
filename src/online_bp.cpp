@@ -30,6 +30,7 @@ SOFTWARE.
 
 using namespace std;
 
+namespace solca_comp{
 // operations for bit array
 
 uint64_t OnlineBP::FwdSel(uint64_t block_pos,
@@ -890,3 +891,4 @@ int main(int argc, char *argv[])
   return 0;
 }
 #endif
+}//namespace solca_comp

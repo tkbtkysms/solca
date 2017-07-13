@@ -36,7 +36,7 @@ SOFTWARE.
 #include "constant_numbers.hpp"
 #include "succinct_poslp.hpp"
 
-namespace comp {
+namespace solca_comp {
   class SOLCA {
   private:
     std::vector<std::deque<Node> > ques_;
@@ -138,5 +138,5 @@ namespace comp {
     ques_[kLevel].pop_front();
     que_len_[kLevel] -= 3;
   }
-} // namespace comp
+} // namespace solca_comp
 #endif // SOLCA_HPP_

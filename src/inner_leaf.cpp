@@ -26,7 +26,7 @@ SOFTWARE.
 
 using namespace std;
 
-namespace comp {
+namespace solca_comp {
 
   void InnerLeaf::Init(const uint64_t kInitBitLen) {
     init_bit_len_ = bit_len_ = kInitBitLen;
@@ -126,6 +126,6 @@ namespace comp {
     }
   }
 
-} // namespace comp
+} // namespace solca_comp
 
 

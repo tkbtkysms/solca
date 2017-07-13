@@ -32,6 +32,8 @@ SOLCA: Seciton 3.3 of [2].
 SOLCA+CRD: Section 4 of [2] ← this implementation.   
 LZD: the patriciaf tree　space construction of https://github.com/kg86/lzd.  
 Re-Pair: https://github.com/nicolaprezza/Re-Pair.  
+MKRe-Pair: [3]
+
 ## experimental environment
 OS: CentOS 6.9  
 CPU: Intel(R) Xeon(R) CPU E7-8837 @2.67GHz  
@@ -49,6 +51,15 @@ Compiler: gcc 6.2.1
 |SOLCA+CRD|183.66|82.45|3.82|
 |LZD|26.94|589.76|5.92|
 |Re-Pair|4452.92|2835.01|1.93|
+|freq_FOLCA (bucket size 1M)||||
+|freq_FOLCA (bucket size 10M)||||
+|freq_FOLCA (bucket size 100M)||||
+|lossy_FOLCA (block size 1M)|128.836|3.58||
+|lossy_FOLCA (block size 10M)||||
+|lossy_FOLCA (block size 100M)||||
+|MKRe-Pair (block size 1M)||||
+|MKRe-Pair (block size 10M)||||
+|MKRe-Pair (block size 100M)||||
 
 ##  core utils (196MB)
 
@@ -60,6 +71,16 @@ Compiler: gcc 6.2.1
 |SOLCA+CRD|82.98|61.09|6.04|
 |LZD|11.95|334.04|8.96|
 |Re-Pair|1798.69|1175.77|2.77|
+|freq_FOLCA (bucket size 1M)||||
+|freq_FOLCA (bucket size 10M)||||
+|freq_FOLCA (bucket size 100M)||||
+|lossy_FOLCA (block size 1M)||||
+|lossy_FOLCA (block size 10M)||||
+|lossy_FOLCA (block size 100M)||||
+|MKRe-Pair (block size 1M)||||
+|MKRe-Pair (block size 10M)||||
+|MKRe-Pair (block size 100M)||||
+
 
 ## einstein.de.txt (89MB)
 
@@ -71,6 +92,15 @@ Compiler: gcc 6.2.1
 |SOLCA+CRD|14.77|23.36|0.38|
 |LZD|2.07|46.28|0.66|
 |Re-Pair|234.21|464.48|0.19|
+[](|freq_FOLCA (bucket size 1M)||||
+|freq_FOLCA (bucket size 10M)||||
+|freq_FOLCA (bucket size 100M)||||
+|lossy_FOLCA (block size 1M)||||
+|lossy_FOLCA (block size 10M)||||
+|lossy_FOLCA (block size 100M)||||
+|MKRe-Pair (block size 1M)||||
+|MKRe-Pair (block size 10M)||||
+|MKRe-Pair (block size 100M)||||)
 
 ## einstein.en.txt (446MB) 
 
@@ -82,6 +112,16 @@ Compiler: gcc 6.2.1
 |SOLCA+CRD|78.63|25.29|0.20|
 |LZD|9.79|205.06|0.28|
 |Re-Pair|1589.91|2417.14|0.10|
+[](|freq_FOLCA (bucket size 1M)||||
+|freq_FOLCA (bucket size 10M)||||
+|freq_FOLCA (bucket size 100M)||||
+|lossy_FOLCA (block size 1M)||||
+|lossy_FOLCA (block size 10M)||||
+|lossy_FOLCA (block size 100M)||||
+|MKRe-Pair (block size 1M)||||
+|MKRe-Pair (block size 10M)||||
+|MKRe-Pair (block size 100M)||||)
+
 ## Escherichia_coli (108MB) 
 
 |compressor|compression time (sec)| memory consumption (MB)|compression ratio|
@@ -92,6 +132,15 @@ Compiler: gcc 6.2.1
 |SOLCA+CRD|67.42|78.58|14.14|
 |LZD|14.72|403.53|20.98|
 |Re-Pair|1209.61|701.31|8.37|
+|freq_FOLCA (bucket size 1M)||||
+|freq_FOLCA (bucket size 10M)||||
+|freq_FOLCA (bucket size 100M)||||
+|lossy_FOLCA (block size 1M)||||
+|lossy_FOLCA (block size 10M)||||
+|lossy_FOLCA (block size 100M)||||
+|MKRe-Pair (block size 1M)||||
+|MKRe-Pair (block size 10M)||||
+|MKRe-Pair (block size 100M)||||
 
 ## influenza (148MB)
 
@@ -103,6 +152,15 @@ Compiler: gcc 6.2.1
 |SOLCA+CRD|41.84|44.92|5.44|
 |LZD|8.39|215.49|6.47|
 |Re-Pair|578.32|960.61|2.67|
+[](|freq_FOLCA (bucket size 1M)||||
+|freq_FOLCA (bucket size 10M)||||
+|freq_FOLCA (bucket size 100M)||||
+|lossy_FOLCA (block size 1M)||||
+|lossy_FOLCA (block size 10M)||||
+|lossy_FOLCA (block size 100M)||||
+|MKRe-Pair (block size 1M)||||
+|MKRe-Pair (block size 10M)||||
+|MKRe-Pair (block size 100M)||||)
 
 ## kernel (247MB)
 
@@ -114,6 +172,15 @@ Compiler: gcc 6.2.1
 |SOLCA+CRD|102.55|43.32|2.55|
 |LZD|9.46|257.53|4.20|
 |Re-Pair|1823.79|1374.12|1.23|
+[](|freq_FOLCA (bucket size 1M)||||
+|freq_FOLCA (bucket size 10M)||||
+|freq_FOLCA (bucket size 100M)||||
+|lossy_FOLCA (block size 1M)||||
+|lossy_FOLCA (block size 10M)||||
+|lossy_FOLCA (block size 100M)||||
+|MKRe-Pair (block size 1M)||||
+|MKRe-Pair (block size 10M)||||
+|MKRe-Pair (block size 100M)||||)
 
 ## para (410MB)
 
@@ -125,6 +192,15 @@ Compiler: gcc 6.2.1
 |SOLCA+CRD|196.63|94.46|5.21|
 |LZD|30.92|693.93|8.19|
 |Re-Pair|5713.95|2639.39|2.74|
+[](|freq_FOLCA (bucket size 1M)||||
+|freq_FOLCA (bucket size 10M)||||
+|freq_FOLCA (bucket size 100M)||||
+|lossy_FOLCA (block size 1M)||||
+|lossy_FOLCA (block size 10M)||||
+|lossy_FOLCA (block size 100M)||||
+|MKRe-Pair (block size 1M)||||
+|MKRe-Pair (block size 10M)||||
+|MKRe-Pair (block size 100M)||||)
 
 ## world_leaders (45MB)
 
@@ -136,10 +212,22 @@ Compiler: gcc 6.2.1
 |SOLCA+CRD|10.46|28.54|4.26|
 |LZD|1.60|53.52|5.41|
 |Re-Pair|103.0４|242.38|1.71|
+[](|freq_FOLCA (bucket size 1M)||||
+|freq_FOLCA (bucket size 10M)||||
+|freq_FOLCA (bucket size 100M)||||
+|lossy_FOLCA (block size 1M)||||
+|lossy_FOLCA (block size 10M)||||
+|lossy_FOLCA (block size 100M)||||
+|MKRe-Pair (block size 1M)||||
+|MKRe-Pair (block size 10M)||||
+|MKRe-Pair (block size 100M)||||)
 
 # references
 [1] Shirou Maruyama, Yasuo Tabei, Hiroshi Sakamoto, Kunihiko Sadakane:  
-Fully-Online Grammar Compression. SPIRE 2013, 218-229.
+Fully-Online Grammar Compression. SPIRE 2013, 218-229.  
 
 [2] Yoshimasa Takabatake, Tomohiro I, Hiroshi Sakamoto:  
-A Space-Optimal Grammar Compression. ESA2017, to appear.
+A Space-Optimal Grammar Compression. ESA2017, to appear.  
+
+[3] Takuya Masaki, Takuya Kida:  
+Online Grammar Transformation Based on Re-Pair Algorithm. DCC 2016, 349-358.

@@ -34,55 +34,57 @@ SOFTWARE.
 #include "constant_numbers.hpp"
 #include "common_functions.hpp"
 
-//extended fixed length code array.
-//FLCVector + additional informations
-//(# of codes, # of reserved codes, bits per code)
 
-class EFLCVector{      
-private:
-  FLCVector flc_vec_;
-  uint64_t num_codes_;
-  uint64_t reserved_codes_;
-  uint8_t code_bits_;
+namespace solca_comp{
+  //extended fixed length code array.
+  //FLCVector + additional informations
+  //(# of codes, # of reserved codes, bits per code)
 
-public:
-  EFLCVector() : flc_vec_(),		
-		 num_codes_(),
-		 reserved_codes_(),
-		 code_bits_(){}
-  ~EFLCVector(){}
+  class EFLCVector{      
+  private:
+    FLCVector flc_vec_;
+    uint64_t num_codes_;
+    uint64_t reserved_codes_;
+    uint8_t code_bits_;
 
-  //initialization/resize/clear/deletion of variables
-  void Init(const uint64_t kReservedCodes,
-	    const uint64_t kMaxVal);
-  void Resize(const uint64_t kReservedCodes,
+  public:
+    EFLCVector() : flc_vec_(),		
+		   num_codes_(),
+		   reserved_codes_(),
+		   code_bits_(){}
+    ~EFLCVector(){}
+
+    //initialization/resize/clear/deletion of variables
+    void Init(const uint64_t kReservedCodes,
 	      const uint64_t kMaxVal);
-  void Resize2(const uint64_t kReservedCodes,
-	       const uint64_t kMaxVal);
-  void Clear();
-  void Delete();
+    void Resize(const uint64_t kReservedCodes,
+		const uint64_t kMaxVal);
+    void Resize2(const uint64_t kReservedCodes,
+		 const uint64_t kMaxVal);
+    void Clear();
+    void Delete();
   
-  //setters and getters
-  void PushBack(const uint64_t kCode);
-  void Set(const uint64_t kPos, 
-	   const uint64_t kCode);
-  uint64_t Get(const uint64_t kPos,
-	       const uint8_t kCodeBits);
-  uint64_t operator[](const uint64_t kPos) const;
-  uint64_t NumCodes() const;
-  uint64_t ReservedCodes();
-  uint8_t CodeBits();
+    //setters and getters
+    void PushBack(const uint64_t kCode);
+    void Set(const uint64_t kPos, 
+	     const uint64_t kCode);
+    uint64_t Get(const uint64_t kPos,
+		 const uint8_t kCodeBits);
+    uint64_t operator[](const uint64_t kPos) const;
+    uint64_t NumCodes() const;
+    uint64_t ReservedCodes();
+    uint8_t CodeBits();
   
-  //saving/loading from/to input/output file
-  void Save(std::ofstream &ofs);
-  void Load(std::ifstream &ifs);
+    //saving/loading from/to input/output file
+    void Save(std::ofstream &ofs);
+    void Load(std::ifstream &ifs);
 
-  //computation for each space
-  uint64_t NumReservedBlocks();
-  uint64_t NumBlocks();
-  uint64_t ByteSize() const;
+    //computation for each space
+    uint64_t NumReservedBlocks();
+    uint64_t NumBlocks();
+    uint64_t ByteSize() const;
 
-};// class EFLCVector
+  };// class EFLCVector
 
-
+}//namespace solca_comp
 #endif //EFLC_VECTOR_HPP

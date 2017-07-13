@@ -23,7 +23,7 @@ SOFTWARE.
 */
 
 #include <string>
-#include "solca.hpp"
+#include "decomp_suc_poslp.hpp"
 #include "cmdline.h"
 
 using namespace std;
@@ -38,9 +38,9 @@ int main(int argc, char *argv[])
   const string input_file   = p.get<string>("compressed_file");
   const string output_file  = p.get<string>("output_file");
 
-  comp::SOLCA solca;
+  solca_comp::DSucPOSLP dsuc_poslp;
   
-  return solca.Decompress(input_file, 
-			  output_file);
+  return dsuc_poslp.Decompress(input_file, 
+			       output_file);
 }
 

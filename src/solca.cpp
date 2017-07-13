@@ -26,7 +26,7 @@ SOFTWARE.
 
 using namespace std;
 
-namespace comp {
+namespace solca_comp {
   
   void SOLCA::Init(const string& kOutputFileName) {
     sposlp_.Init(kOutputFileName);
@@ -218,32 +218,6 @@ namespace comp {
     sposlp_.Clear();
     return 1;
   }
+  
+} //namespace solca_comp
 
-  
-  void SOLCA::RepeatDecompress(const uint64_t kVar,
-			       ofstream &ofs){
-    if(kVar < kAlphabetSize){
-      ofs << (char)kVar;
-    }
-    else{
-      RepeatDecompress(sposlp_.Left(kVar),
-			   ofs);
-      RepeatDecompress(sposlp_.Right(kVar),
-		       ofs);
-    }
-  }
-  
-  uint64_t SOLCA::Decompress(const string& kInputFileName,
-			     const string& kOutputFileName){
-    ifstream ifs(kInputFileName.c_str());
-    ofstream ofs(kOutputFileName.c_str());
-    
-    sposlp_.Load(ifs);
-    ifs.close();
-  
-    RepeatDecompress(sposlp_.NumRules() - 1,
-		     ofs);
-    ofs.close();
-    return 1;
-  }
-} //namespace comp

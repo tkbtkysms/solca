@@ -2,37 +2,40 @@ CXX = g++
 CXXFLAGS = -std=c++11 -O3 -W -Wall -Wno-deprecated
 LINKFLAGS = -lm
 
-SRCS =\
+COMMON =\
+	bit_vector.cpp\
+	flc_vector.cpp\
+	inner_leaf.cpp\
+	online_bp.cpp\
+	suc_fbtree.cpp\
+
+COMP =\
 	EnumCoder.cpp\
 	RSDic.cpp\
-	bit_vector.cpp\
 	eflc_vector.cpp\
-	flc_vector.cpp\
-	freq_crdict.cpp\
-	inner_leaf.cpp\
 	nrs_dic.cpp\
-	online_bp.cpp\
-	out_leaf.cpp\
 	permutation.cpp\
-	solca.cpp\
-	suc_fbtree.cpp\
+	out_leaf.cpp\
+	freq_crdict.cpp\
 	succinct_poslp.cpp\
+	solca.cpp\
+	compress_main.cpp\
 
-SRCS1 = compress_main.cpp\
+DECOMP =\
+	decomp_suc_poslp.cpp\
+	decompress_main.cpp\
 
-SRCS2 = decompress_main.cpp\
-
-OBJS = $(SRCS:%.cpp=%.o)
-OBJS1 = $(SRCS1:%.cpp=%.o)	
-OBJS2 = $(SRCS2:%.cpp=%.o)
+OCOMMON = $(COMMON:%.cpp=%.o)
+OCOMP = $(COMP:%.cpp=%.o)	
+ODECOMP = $(DECOMP:%.cpp=%.o)
 
 all: compress decompress
 
-compress:  $(OBJS) $(OBJS1) 
-	$(CXX) $(CXXFLAGS) $(OTHERFLAGS) $(OBJS) $(OBJS1) $(LINKFLAGS) -o compress
+compress:  $(OCOMMON) $(OCOMP) 
+	$(CXX) $(CXXFLAGS) $(OTHERFLAGS) $(OCOMMON) $(OCOMP) $(LINKFLAGS) -o compress
 
-decompress: $(OBJS) $(OBJS2)
-	$(CXX) $(CXXFLAGS) $(OTHERFLAGS) $(OBJS) $(OBJS2) $(LINKFLAGS) -o decompress
+decompress: $(OCOMMON) $(ODECOMP)
+	$(CXX) $(CXXFLAGS) $(OTHERFLAGS) $(OCOMMON) $(ODECOMP) $(LINKFLAGS) -o decompress
 
 debug:
 	make all CXXFLAGS="-ggdb -W -Wall -pedantic"
@@ -44,6 +47,6 @@ debug:
 	$(CXX) $(CXXFLAGS) $(OHTERFLAGS) -c $<
 
 clean:
-	rm -f compress decompress fcrdic *.o *~
+	rm -f compress decompress *.o *~
 
 

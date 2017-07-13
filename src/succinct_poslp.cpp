@@ -25,7 +25,7 @@ SOFTWARE.
 
 using namespace std;
 
-namespace comp {
+namespace solca_comp {
 
   //initilization and clear of data structures
   void SucPOSLP::Init(const string &kOutputFileName) {
@@ -87,6 +87,22 @@ namespace comp {
     return num_rules_++;
   }
 
+  uint64_t SucPOSLP::AccessLeaf(const uint64_t kInd){
+    uint64_t kOuterRank = sfbt_.OuterRank(kInd);
+    if (sfbt_.IsOuter(kInd)){
+      if(sfbt_.IsLeftChild(kInd)){
+	return outer_leaf_.Left(kOuterRank - 1);
+      }
+      else{
+	return outer_leaf_.Right(kOuterRank - 1);
+      }
+    }
+    else{
+      return inner_leaf_.Get(sfbt_.LeafRank(kInd) - (kOuterRank << 1) - 1,
+			     sfbt_.InRank(kInd) + kAlphabetSize);
+    }
+  }
+  
   //operations for accessing production rules.
   uint64_t SucPOSLP::Left(const uint64_t kVar){
     if(kVar < kAlphabetSize){
@@ -271,18 +287,51 @@ namespace comp {
 	     ofs);
     }
   }
+
   //save the data
   void SucPOSLP::Save(ofstream &ofs){
+    FLCVector output;
+    uint64_t bit_pos = 0;
+    uint64_t leaf_bits = 9;
+    uint64_t max_code = 1 << leaf_bits;
+    uint64_t tmp_leaf = 0;
+    uint64_t inner_rank = kAlphabetSize;
+    uint64_t leaf_rank = 0;
+    
+    output.Init(2,64);
     sfbt_.Save(ofs);
-    inner_leaf_.Write(ofs);
-    outer_leaf_.Save(ofs);
-    ofs.write((char*)&num_rules_, sizeof(num_rules_));
+    for(uint64_t i = 0; i < sfbt_.Length(); i++){
+      if(sfbt_.Get(i) == kOP){
+	tmp_leaf = AccessLeaf(leaf_rank + inner_rank - kAlphabetSize);
+	output.SetBits(bit_pos,
+		       tmp_leaf,
+		       leaf_bits);
+	bit_pos += leaf_bits;
+	if(bit_pos >= kBlockSize){
+
+	  output.Save(ofs, 1, kBlockSize);
+	  output.SetBits(0,
+			 output.GetBits(kBlockSize,kBlockSize),
+			 kBlockSize);
+	  output.SetBits(kBlockSize,
+			 0,
+			 kBlockSize);
+	  bit_pos = bit_pos  - kBlockSize;
+	}
+	leaf_rank++;
+      }
+      else{
+	inner_rank++;
+	if(inner_rank >= max_code){
+	  leaf_bits++;
+	  max_code = 1 << leaf_bits;
+	}
+      }
+    }
+    if(bit_pos != 0){
+      output.Save(ofs, 1, kBlockSize);
+    }
   }
-  //load the data
-  void SucPOSLP::Load(ifstream &ifs){
-    sfbt_.Load(ifs);
-    inner_leaf_.Read(ifs);
-    outer_leaf_.Load(ifs);
-    ifs.read((char*)&num_rules_, sizeof(num_rules_));
-  }
-} // namespace comp
+
+ 
+}// namespace solca_comp

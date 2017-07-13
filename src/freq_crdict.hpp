@@ -32,48 +32,50 @@ SOFTWARE.
 #include "constant_numbers.hpp"
 #include "common_functions.hpp"
 
-class FreqCRDict{ //constant space reverse dictionary for frequent rules;
-private:
-  std::vector<uint64_t> var_;
-  std::vector<uint64_t> left_;
-  std::vector<uint64_t> right_;
-  std::vector<uint64_t> freq_;
-  std::vector<uint32_t> next_;
-  std::vector<uint32_t> hash_table_;
-  std::vector<uint32_t> not_used_;
+namespace solca_comp{
 
-  const uint32_t hash_size_ = kPrimes[16];
-  uint64_t num_frules_;
-  uint64_t insert_ht_pos_;
-  uint32_t num_not_used_;
-  uint64_t num_bucket_;
+  class FreqCRDict{ //constant space reverse dictionary for frequent rules;
+  private:
+    std::vector<uint64_t> var_;
+    std::vector<uint64_t> left_;
+    std::vector<uint64_t> right_;
+    std::vector<uint64_t> freq_;
+    std::vector<uint32_t> next_;
+    std::vector<uint32_t> hash_table_;
+    std::vector<uint32_t> not_used_;
 
-public:
-  FreqCRDict(): var_(0),
-		left_(0),
-		right_(0),
-		freq_(0),
-		next_(0),
-		hash_table_(0),
-		not_used_(0),
-                num_frules_(0),
-                insert_ht_pos_(0),
-		num_not_used_(0){};
-  ~FreqCRDict(){};
+    const uint32_t hash_size_ = kPrimes[16];
+    uint64_t num_frules_;
+    uint64_t insert_ht_pos_;
+    uint32_t num_not_used_;
+    uint64_t num_bucket_;
+
+  public:
+    FreqCRDict(): var_(0),
+		  left_(0),
+		  right_(0),
+		  freq_(0),
+		  next_(0),
+		  hash_table_(0),
+		  not_used_(0),
+		  num_frules_(0),
+		  insert_ht_pos_(0),
+		  num_not_used_(0){};
+    ~FreqCRDict(){};
   
-  void Init();
-  uint64_t GetVar(const uint64_t kLeft,
-		  const uint64_t kRight);
-  void AddRule(const uint64_t kVar,
-		   const uint64_t kLeft,
-		   const uint64_t kRight);
-  uint64_t ByteSize() const;
-private:
-  void InsertToHash(const uint64_t kInsertPos);
-  void DeleteFromHash(const uint64_t kPos);
-  void DeleteNotFreqRules();
-  void PrintCRDict();
+    void Init();
+    uint64_t GetVar(const uint64_t kLeft,
+		    const uint64_t kRight);
+    void AddRule(const uint64_t kVar,
+		 const uint64_t kLeft,
+		 const uint64_t kRight);
+    uint64_t ByteSize() const;
+  private:
+    void InsertToHash(const uint64_t kInsertPos);
+    void DeleteFromHash(const uint64_t kPos);
+    void DeleteNotFreqRules();
+    void PrintCRDict();
 
-};
-
+  };
+}
 #endif // FREQ_CRDICT_HPP_

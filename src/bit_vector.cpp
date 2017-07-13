@@ -26,39 +26,43 @@ SOFTWARE.
 
 using namespace std;
 
-void BitVector::Init(const uint64_t kReservedBits){
+namespace solca_comp{
 
-  uint64_t num_blocks = (kReservedBits >> kLgBlockSize);;
-  if((kReservedBits & (kBlockSize - 1))){
-    num_blocks++;
+  void BitVector::Init(const uint64_t kReservedBits){
+
+    uint64_t num_blocks = (kReservedBits >> kLgBlockSize);;
+    if((kReservedBits & (kBlockSize - 1))){
+      num_blocks++;
+    }
+    CFunc::ResizeVec(bits_,
+		     num_blocks);
+    reserved_bits_ = num_blocks * kBlockSize;
+    num_bits_ = 0;
   }
-  CFunc::ResizeVec(bits_,
-		   num_blocks);
-  reserved_bits_ = num_blocks * kBlockSize;
-  num_bits_ = 0;
-}
 
-void BitVector::Resize(const uint64_t kReservedBits){
-  uint64_t num_blocks = (kReservedBits >> kLgBlockSize);;
-  if((kReservedBits & (kBlockSize - 1))){
-    num_blocks++;
+  void BitVector::Resize(const uint64_t kReservedBits){
+    uint64_t num_blocks = (kReservedBits >> kLgBlockSize);;
+    if((kReservedBits & (kBlockSize - 1))){
+      num_blocks++;
+    }
+    CFunc::ResizeVec(bits_,
+		     num_blocks);
+    reserved_bits_ = num_blocks * kBlockSize;
   }
-  CFunc::ResizeVec(bits_,
-		   num_blocks);
-  reserved_bits_ = num_blocks * kBlockSize;
-}
 
-void BitVector::Delete(){
-  vector<uint64_t> ().swap(bits_);
-  num_bits_ = 0;
-  reserved_bits_ = 0;
-}
-
-void BitVector::Save(ofstream &ofs,
-		     const uint64_t kNumBits){
-  uint64_t num_blocks = (kNumBits >> kLgBlockSize);;
-  if((kNumBits & (kBlockSize - 1))){
-    num_blocks++;
+  void BitVector::Delete(){
+    vector<uint64_t> ().swap(bits_);
+    num_bits_ = 0;
+    reserved_bits_ = 0;
   }
-  ofs.write((char*)&bits_[0], sizeof(bits_[0]) * num_blocks);
-}
+
+  void BitVector::Save(ofstream &ofs,
+		       const uint64_t kNumBits){
+    uint64_t num_blocks = (kNumBits >> kLgBlockSize);;
+    if((kNumBits & (kBlockSize - 1))){
+      num_blocks++;
+    }
+    ofs.write((char*)&bits_[0], sizeof(bits_[0]) * num_blocks);
+  }
+
+}//namespace solca_comp

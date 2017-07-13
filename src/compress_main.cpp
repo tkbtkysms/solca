@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
   const string output_file  = p.get<string>("output_file");
   const bool   erase_br     = p.get<bool>  ("erase_br");
 
-  comp::SOLCA solca;
+  solca_comp::SOLCA solca;
   
   return solca.Compress(input_file, 
 			output_file, 

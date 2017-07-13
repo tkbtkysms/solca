@@ -38,7 +38,7 @@ SOFTWARE.
 #include "out_leaf.hpp"
 #include "freq_crdict.hpp"
 
-namespace comp {
+namespace solca_comp {
 
   //node of POSLP before encoding
   class Node{
@@ -128,6 +128,7 @@ namespace comp {
     void Load(std::ifstream &ifs);
   
   private:
+    uint64_t AccessLeaf(const uint64_t kInd);
     //decompression method
     void Decode(const uint64_t kVar,
 		std::ofstream &ofs2);
@@ -159,7 +160,7 @@ namespace comp {
     ++buf_size_;
   }
 
-} // namespace comp
+} // namespace solca_comp
 
 #endif // SUC_POSLP_HPP_
 

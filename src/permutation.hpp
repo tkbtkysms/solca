@@ -28,65 +28,68 @@ SOFTWARE.
 #include "eflc_vector.hpp"
 #include "RSDic.hpp"
 
-class Permutation{
-
-private:
-  //permutation structures
-  EFLCVector elems_;
-  rsdic::RSDic has_skip_elem_; 
-  EFLCVector skip_list_;
-  uint8_t pre_bpd_;
-  //hash table for updating
-  uint64_t  hash_size_;
-  EFLCVector hash_table_;
-  EFLCVector hash_list_;
-  EFLCVector tmp_index_;
-  EFLCVector tmp_skip_list_;
+namespace solca_comp{
   
-public:
-  Permutation (): elems_(),
-		  has_skip_elem_(),
-		  skip_list_(),
-		  pre_bpd_(),
-		  hash_size_(),
-                  hash_table_(),
-		  hash_list_(),
-		  tmp_index_(),
-		  tmp_skip_list_(){}
-  ~Permutation(){}
-  //build/clear/resize/ permutation
-  void Build(EFLCVector &elem);
-  void Clear();
-  void Resize(const uint64_t kLength);
-  //setters and getters
-  void SetElem(const uint64_t kIndex, 
-	       const uint64_t kVar);
-  uint64_t GetElem(const uint64_t kIndex);
-  uint64_t GetPreElem(const uint64_t kIndex);
-  void SetPreBPD();
+  class Permutation{
+
+  private:
+    //permutation structures
+    EFLCVector elems_;
+    rsdic::RSDic has_skip_elem_; 
+    EFLCVector skip_list_;
+    uint8_t pre_bpd_;
+    //hash table for updating
+    uint64_t  hash_size_;
+    EFLCVector hash_table_;
+    EFLCVector hash_list_;
+    EFLCVector tmp_index_;
+    EFLCVector tmp_skip_list_;
   
-  void ReIndex();
-  uint64_t Access(const uint64_t kPos);
-  uint64_t ReverseAccess(const uint64_t kPos);
-  uint64_t Length();
-  void Save(std::ofstream &ofs);
-  void Load(std::ifstream &ifs);
-  uint64_t ByteSize() const;
-private:
-  //operations for the update of hash table
-  void InitHash();
-  void SetHash(const uint64_t kIndex,
-	       const uint64_t kSkipPos);
-  uint64_t GetHash(const uint64_t kIndex);
-  void AddTable(const uint64_t kHashVal,
-		const uint64_t kIndex,
-		const uint64_t kSkipPos);
-  void AddList(const uint64_t kHashVal,
-	       const uint64_t kIndex,
-	       const uint64_t kSkipPos);
-  void DeleteHash();
+  public:
+    Permutation (): elems_(),
+		    has_skip_elem_(),
+		    skip_list_(),
+		    pre_bpd_(),
+		    hash_size_(),
+		    hash_table_(),
+		    hash_list_(),
+		    tmp_index_(),
+		    tmp_skip_list_(){}
+    ~Permutation(){}
+    //build/clear/resize/ permutation
+    void Build(EFLCVector &elem);
+    void Clear();
+    void Resize(const uint64_t kLength);
+    //setters and getters
+    void SetElem(const uint64_t kIndex, 
+		 const uint64_t kVar);
+    uint64_t GetElem(const uint64_t kIndex);
+    uint64_t GetPreElem(const uint64_t kIndex);
+    void SetPreBPD();
+  
+    void ReIndex();
+    uint64_t Access(const uint64_t kPos);
+    uint64_t ReverseAccess(const uint64_t kPos);
+    uint64_t Length();
+    void Save(std::ofstream &ofs);
+    void Load(std::ifstream &ifs);
+    uint64_t ByteSize() const;
+  private:
+    //operations for the update of hash table
+    void InitHash();
+    void SetHash(const uint64_t kIndex,
+		 const uint64_t kSkipPos);
+    uint64_t GetHash(const uint64_t kIndex);
+    void AddTable(const uint64_t kHashVal,
+		  const uint64_t kIndex,
+		  const uint64_t kSkipPos);
+    void AddList(const uint64_t kHashVal,
+		 const uint64_t kIndex,
+		 const uint64_t kSkipPos);
+    void DeleteHash();
 
 
-};
-
+  };
+  
+}//namespace solca_comp
 #endif // PERMUTATION_HPP

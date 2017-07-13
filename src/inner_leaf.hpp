@@ -32,7 +32,7 @@ SOFTWARE.
 #include <cstdint>
 #include "flc_vector.hpp"
 
-namespace comp {
+namespace solca_comp {
 
   class InnerLeaf {  
   private:
@@ -63,6 +63,6 @@ namespace comp {
   
   }; // class InnerLeaf
   
-} // namespace comp
+} // namespace solca_comp
 
 #endif // INNER_LEAF_HPP_

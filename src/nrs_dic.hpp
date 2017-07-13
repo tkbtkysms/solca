@@ -30,53 +30,57 @@ SOFTWARE.
 #include "eflc_vector.hpp"
 #include "flc_vector.hpp"
 
-//naive rank/select dictionary for large alphabet
-class NRSDic{
-private : 
-  EFLCVector data_;
-  uint64_t hash_size_;
-  uint64_t primes_index_;
-  uint64_t bits_per_hash_;
-  uint64_t avail_max_var_;
-  uint64_t max_var_;
-  EFLCVector hash_table_;
-  EFLCVector hash_list_;
-  EFLCVector num_var_;
-  std::vector<FLCVector> var_pos_; 
+namespace solca_comp{
+
+  //naive rank/select dictionary for large alphabet
+  class NRSDic{
+  private : 
+    EFLCVector data_;
+    uint64_t hash_size_;
+    uint64_t primes_index_;
+    uint64_t bits_per_hash_;
+    uint64_t avail_max_var_;
+    uint64_t max_var_;
+    EFLCVector hash_table_;
+    EFLCVector hash_list_;
+    EFLCVector num_var_;
+    std::vector<FLCVector> var_pos_; 
  
-public :
-  NRSDic() : data_(),
-	     hash_size_(),
-	     primes_index_(),
-	     bits_per_hash_(),
-	     avail_max_var_(),
-	     max_var_(),
-	     hash_table_(), 
-	     hash_list_(),
-	     num_var_(),
-	     var_pos_(){}
-  ~NRSDic(){}
+  public :
+    NRSDic() : data_(),
+	       hash_size_(),
+	       primes_index_(),
+	       bits_per_hash_(),
+	       avail_max_var_(),
+	       max_var_(),
+	       hash_table_(), 
+	       hash_list_(),
+	       num_var_(),
+	       var_pos_(){}
+    ~NRSDic(){}
   
-  void     Init           (const uint64_t kLength);
-  uint64_t PushBack       (const uint64_t kVar);
+    void     Init           (const uint64_t kLength);
+    uint64_t PushBack       (const uint64_t kVar);
  
-  uint64_t Select         (const uint64_t kVar,
-			   FLCVector    &result);
-  uint64_t Access         (const uint64_t kIndex);
-  void     Clear          ();
-  void     CheckClear     ();
-  void     Delete         ();
-  uint64_t ByteSize       () const;
-  void     DataResize     (const uint64_t kLen);
-  void     Resize         (const uint64_t kLen);
-  uint64_t BPH            ();
-  uint64_t Num            ();
-  uint64_t MaxVar         ();
-  void     Save           (std::ofstream &ofs);
-  void     Load           (std::ifstream &ifs);
-private:
-  void     AddTable       (const uint64_t kHashVal);
-  void     AddList        (const uint64_t kHashVal);
-}; 
+    uint64_t Select         (const uint64_t kVar,
+			     FLCVector    &result);
+    uint64_t Access         (const uint64_t kIndex);
+    void     Clear          ();
+    void     CheckClear     ();
+    void     Delete         ();
+    uint64_t ByteSize       () const;
+    void     DataResize     (const uint64_t kLen);
+    void     Resize         (const uint64_t kLen);
+    uint64_t BPH            ();
+    uint64_t Num            ();
+    uint64_t MaxVar         ();
+    void     Save           (std::ofstream &ofs);
+    void     Load           (std::ifstream &ifs);
+  private:
+    void     AddTable       (const uint64_t kHashVal);
+    void     AddList        (const uint64_t kHashVal);
+  };
+
+}//namespace solca_comp
 #endif //NRS_DIC_HPP_
 

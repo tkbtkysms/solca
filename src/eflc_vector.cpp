@@ -26,116 +26,119 @@ SOFTWARE.
 
 using namespace std;
 
-void EFLCVector::Init(const uint64_t kReservedCodes, 
-		      const uint64_t kMaxVal){
-  code_bits_ = CFunc::MSB(kMaxVal) + 1;
-  num_codes_ = 0;
-  reserved_codes_ = kReservedCodes;
-  flc_vec_.ResizeAndInit(kReservedCodes,
-			 code_bits_);
-}
+namespace solca_comp{
 
-void EFLCVector::Resize(const uint64_t kReservedCodes, 
+  void EFLCVector::Init(const uint64_t kReservedCodes, 
 			const uint64_t kMaxVal){
-  uint64_t prev_code_bits = code_bits_;
-  
-  code_bits_ = CFunc::MSB(kMaxVal) + 1;
-  if(code_bits_ == 0){
-    code_bits_ = 1;
+    code_bits_ = CFunc::MSB(kMaxVal) + 1;
+    num_codes_ = 0;
+    reserved_codes_ = kReservedCodes;
+    flc_vec_.ResizeAndInit(kReservedCodes,
+			   code_bits_);
   }
-  reserved_codes_ = kReservedCodes;
-  flc_vec_.Resize(kReservedCodes,
-		  code_bits_);
-  for(size_t i = num_codes_ - 1; i !=  kDummyCode;i--){
-    Set(i, Get(i,prev_code_bits));
-  }
-}
 
-void EFLCVector::Resize2(const uint64_t kReservedCodes, 
-			 const uint64_t kMaxVal){
-  code_bits_ = CFunc::MSB(kMaxVal) + 1;
-  reserved_codes_ = kReservedCodes;
-  num_codes_ = kReservedCodes;
-  flc_vec_.Resize(kReservedCodes,
-		  code_bits_);
-}
-
-void EFLCVector::Clear(){
-  num_codes_ = 0;
-}
+  void EFLCVector::Resize(const uint64_t kReservedCodes, 
+			  const uint64_t kMaxVal){
+    uint64_t prev_code_bits = code_bits_;
   
-void EFLCVector::Delete(){
-  reserved_codes_ = 0;
-  code_bits_ = 0;
-  num_codes_ = 0;
-  flc_vec_.Delete();
-}
-
-void EFLCVector::PushBack(const uint64_t kCode){
-  flc_vec_.PushBack(num_codes_++,
-		    kCode,
+    code_bits_ = CFunc::MSB(kMaxVal) + 1;
+    if(code_bits_ == 0){
+      code_bits_ = 1;
+    }
+    reserved_codes_ = kReservedCodes;
+    flc_vec_.Resize(kReservedCodes,
 		    code_bits_);
-}
+    for(size_t i = num_codes_ - 1; i !=  kDummyCode;i--){
+      Set(i, Get(i,prev_code_bits));
+    }
+  }
 
-void EFLCVector::Set(const uint64_t kPos, 
-		     const uint64_t kCode){
-  flc_vec_.Set(kPos,
-	       kCode,
-	       code_bits_);
-}
+  void EFLCVector::Resize2(const uint64_t kReservedCodes, 
+			   const uint64_t kMaxVal){
+    code_bits_ = CFunc::MSB(kMaxVal) + 1;
+    reserved_codes_ = kReservedCodes;
+    num_codes_ = kReservedCodes;
+    flc_vec_.Resize(kReservedCodes,
+		    code_bits_);
+  }
 
-uint64_t EFLCVector::Get(const uint64_t kPos,
-			 const uint8_t kCodeBits){
-  return flc_vec_.Get(kPos,
-		      kCodeBits);
-}
+  void EFLCVector::Clear(){
+    num_codes_ = 0;
+  }
+  
+  void EFLCVector::Delete(){
+    reserved_codes_ = 0;
+    code_bits_ = 0;
+    num_codes_ = 0;
+    flc_vec_.Delete();
+  }
 
-uint64_t EFLCVector::operator[](const uint64_t kPos) const{
-  return flc_vec_.Get(kPos,
+  void EFLCVector::PushBack(const uint64_t kCode){
+    flc_vec_.PushBack(num_codes_++,
+		      kCode,
 		      code_bits_);
-}
+  }
 
-uint64_t EFLCVector::NumCodes() const{
-  return num_codes_;
-}
+  void EFLCVector::Set(const uint64_t kPos, 
+		       const uint64_t kCode){
+    flc_vec_.Set(kPos,
+		 kCode,
+		 code_bits_);
+  }
 
-uint64_t EFLCVector::ReservedCodes(){
-  return reserved_codes_;
-}
+  uint64_t EFLCVector::Get(const uint64_t kPos,
+			   const uint8_t kCodeBits){
+    return flc_vec_.Get(kPos,
+			kCodeBits);
+  }
 
-uint8_t EFLCVector::CodeBits(){
-  return code_bits_;
-}
+  uint64_t EFLCVector::operator[](const uint64_t kPos) const{
+    return flc_vec_.Get(kPos,
+			code_bits_);
+  }
 
-uint64_t EFLCVector::NumReservedBlocks(){
-  return ((reserved_codes_ * code_bits_)  >> kLgBlockSize) + 1;
-}
+  uint64_t EFLCVector::NumCodes() const{
+    return num_codes_;
+  }
 
-uint64_t EFLCVector::NumBlocks(){
-  return ((num_codes_ * code_bits_) >> kLgBlockSize) + 1;
-}
+  uint64_t EFLCVector::ReservedCodes(){
+    return reserved_codes_;
+  }
 
-uint64_t EFLCVector::ByteSize() const{
-  return flc_vec_.ByteSize(reserved_codes_,
-			   code_bits_)
-    + sizeof(EFLCVector); 
-}
+  uint8_t EFLCVector::CodeBits(){
+    return code_bits_;
+  }
 
-void EFLCVector::Save(ofstream &ofs){
-  ofs.write((char*)&num_codes_, sizeof(num_codes_));
-  ofs.write((char*)&reserved_codes_, sizeof(reserved_codes_));
-  ofs.write((char*)&code_bits_, sizeof(code_bits_));
-  flc_vec_.Save(ofs,
-		num_codes_,
-		code_bits_);
-}
+  uint64_t EFLCVector::NumReservedBlocks(){
+    return ((reserved_codes_ * code_bits_)  >> kLgBlockSize) + 1;
+  }
 
-void EFLCVector::Load(ifstream &ifs){
-  ifs.read((char*)&num_codes_, sizeof(num_codes_));
-  ifs.read((char*)&reserved_codes_, sizeof(reserved_codes_));
-  ifs.read((char*)&code_bits_, sizeof(code_bits_));
-  flc_vec_.Load(ifs,
-		num_codes_,
-		code_bits_);
-}
+  uint64_t EFLCVector::NumBlocks(){
+    return ((num_codes_ * code_bits_) >> kLgBlockSize) + 1;
+  }
 
+  uint64_t EFLCVector::ByteSize() const{
+    return flc_vec_.ByteSize(reserved_codes_,
+			     code_bits_)
+      + sizeof(EFLCVector); 
+  }
+
+  void EFLCVector::Save(ofstream &ofs){
+    ofs.write((char*)&num_codes_, sizeof(num_codes_));
+    ofs.write((char*)&reserved_codes_, sizeof(reserved_codes_));
+    ofs.write((char*)&code_bits_, sizeof(code_bits_));
+    flc_vec_.Save(ofs,
+		  num_codes_,
+		  code_bits_);
+  }
+
+  void EFLCVector::Load(ifstream &ifs){
+    ifs.read((char*)&num_codes_, sizeof(num_codes_));
+    ifs.read((char*)&reserved_codes_, sizeof(reserved_codes_));
+    ifs.read((char*)&code_bits_, sizeof(code_bits_));
+    flc_vec_.Load(ifs,
+		  num_codes_,
+		  code_bits_);
+  }
+
+}//namespace solca_comp
