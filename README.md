@@ -39,10 +39,14 @@ CPU: Intel(R) Xeon(R) CPU E7-8837 @2.67GHz
 Memory: 1TB  
 Compiler: gcc 6.2.1  
 
+## eavaluation measure
+CT: compression time  
+WS: working space  
+CR: compression (compressed size/ input size * 100)
 
 ## cere (440MB)
 
-|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|compressor|CT (sec)|WS (MB)|CR (%)|
 |---|---|---|---|
 |FOLCA|428.65|168.24|3.82|
 |FOLCA+|303.88|168.19|3.82|
@@ -53,7 +57,7 @@ Compiler: gcc 6.2.1
 
 ##  core utils (196MB)
 
-|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|compressor|CT (sec)|WS (MB)|CR (%)|
 |---|---|---|---|
 |FOLCA|213.56|140.96|6.04|
 |FOLCA+|152.05|140.92|6.04|
@@ -64,7 +68,7 @@ Compiler: gcc 6.2.1
 
 ## einstein.de.txt (89MB)
 
-|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|compressor|CT (sec)|WS (MB)|CR (%)|
 |---|---|---|---|
 |FOLCA|84.33|4.68|0.38|
 |FOLCA+|59.51|4.68|0.38|
@@ -75,7 +79,7 @@ Compiler: gcc 6.2.1
 
 ## einstein.en.txt (446MB) 
 
-|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|compressor|CT (sec)|WS (MB)|CR (%)|
 |---|---|---|---|
 |FOLCA|428.11|10.60|0.20|
 |FOLCA+|305.27|10.60|0.20|
@@ -86,7 +90,7 @@ Compiler: gcc 6.2.1
 
 ## Escherichia_coli (108MB) 
 
-|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|compressor|CT (sec)|WS (MB)|CR (%)|
 |---|---|---|---|
 |FOLCA|114.68|159.63|14.14|
 |FOLCA+|81.31|159.58|14.14|
@@ -97,7 +101,7 @@ Compiler: gcc 6.2.1
 
 ## influenza (148MB)
 
-|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|compressor|CT (sec)|WS (MB)|CR (%)|
 |---|---|---|---|
 |FOLCA|140.62|83.66|5.44|
 |FOLCA+|97.57|83.64|5.44|
@@ -108,7 +112,7 @@ Compiler: gcc 6.2.1
 
 ## kernel (247MB)
 
-|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|compressor|CT (sec)|WS (MB)|CR (%)|
 |---|---|---|---|
 |FOLCA|265.48|73.79|2.55|
 |FOLCA+|187.72|73.76|2.55|
@@ -119,7 +123,7 @@ Compiler: gcc 6.2.1
 
 ## para (410MB)
 
-|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|compressor|CT (sec)|WS (MB)|CR (%)|
 |---|---|---|---|
 |FOLCA|419.36|192.01|5.21|
 |FOLCA+|289.32|191.97|5.21|
@@ -130,7 +134,7 @@ Compiler: gcc 6.2.1
 
 ## world_leaders (45MB)
 
-|compressor|compression time (sec)| memory consumption (MB)|compression ratio|
+|compressor|CT (sec)|WS (MB)|CR (%)|
 |---|---|---|---|
 |FOLCA|41.16|21.24|4.26|
 |FOLCA+|29.69|21.23|4.26|
