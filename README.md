@@ -1,6 +1,6 @@
 # solca
 This program is a space-optimal version of grammar compression called FOLCA [1].  
-The detail will be showed in A Space-Optimal Grammar Compression [2].  
+The detail is showed in A Space-Optimal Grammar Compression [2].  
 This program uses [RSDic](https://code.google.com/archive/p/rsdic/) as a part of the data structure.
 
 # download and compile
@@ -148,4 +148,5 @@ CR: compression (compressed size/ input size * 100)
 Fully-Online Grammar Compression. SPIRE 2013, 218-229.  
 
 [2] Yoshimasa Takabatake, Tomohiro I, Hiroshi Sakamoto:  
-A Space-Optimal Grammar Compression. ESA2017, to appear.  
+A Space-Optimal Grammar Compression. ESA 2017: 67:1-67:15  
+
