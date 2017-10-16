@@ -1,4 +1,4 @@
-]# solca
+# solca
 This program is a space-optimal version of grammar compression called FOLCA [1].  
 The detail is showed in [A Space-Optimal Grammar Compression](http://drops.dagstuhl.de/opus/volltexte/2017/7864/) [2].  
 This program uses [RSDic](https://code.google.com/archive/p/rsdic/) as a part of the data structure.
