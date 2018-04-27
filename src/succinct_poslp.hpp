@@ -70,7 +70,7 @@ namespace solca_comp {
     //buffer for this online construction 
     std::vector<uint64_t> buf_;
     uint64_t buf_size_;
-    // # of production rules
+    // # of production rules + # of alphabet symbols
     uint64_t num_rules_;
     //output file name
     std::string output_file_name_;
@@ -94,6 +94,7 @@ namespace solca_comp {
     void Clear();
 
     //accessor
+    //return # of production rules + # of alphabet symbols
     uint64_t NumRules() const;
 
     //pushing back a new symbol to succint POSLP 
