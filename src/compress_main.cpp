@@ -33,16 +33,19 @@ int main(int argc, char *argv[])
   p.add<string>("input_file",  'i', "input file name",  true);
   p.add<string>("output_file", 'o', "output file name", true);
   p.add<bool>  ("erase_br",    'e', "erase line break", false);
+  p.add<bool>  ("print_logs",  'p', "print logs", false);
 
   p.parse_check(argc, argv);
   const string input_file   = p.get<string>("input_file");
   const string output_file  = p.get<string>("output_file");
   const bool   erase_br     = p.get<bool>  ("erase_br");
+  const bool   print_logs   = p.get<bool>  ("print_logs");
 
   solca_comp::SOLCA solca;
   
   return solca.Compress(input_file, 
-			output_file, 
-			erase_br);
+                        output_file, 
+                        erase_br,
+                        print_logs);
 }
 

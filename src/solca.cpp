@@ -87,23 +87,20 @@ namespace solca_comp {
     }
   }
 
-  void SOLCA::ProcessLastSymbols(const uint64_t kCnt,
-				 const double kStart) {
+  void SOLCA::ProcessLastSymbols() {
     for (uint64_t level = 0; level < kMaxNumQue; ++level) {
       PopFrontQue3(level);
       if (que_len_[level] == 1) {
-	if (ques_[level][0].symbol == sposlp_.NumRules() - 1 
-	    && max_level_ == level) break;
-	BuildPOSLP(ques_[level][0], level + 1);
+        if (ques_[level][0].symbol == sposlp_.NumRules() - 1 
+            && max_level_ == level) break;
+        BuildPOSLP(ques_[level][0], level + 1);
       }
       else if (que_len_[level] == 2) {
-	BuildPOSLP(sposlp_.ReverseAccessAndUpdate(ques_[level][0],
-						  ques_[level][1]),
-		     level + 1);
+        BuildPOSLP(sposlp_.ReverseAccessAndUpdate(ques_[level][0],
+                                                  ques_[level][1]),
+                   level + 1);
       }
     }
-    PrintLogs(kCnt,
-	      GetTimeOfDaySec() - kStart);
     sposlp_.PushLastCP();
   }
     
@@ -155,6 +152,22 @@ namespace solca_comp {
     return 0;
   }
   
+  void SOLCA::PrintColumns() const{
+    cout << "# of input characters\t"
+         << "# of production rules + # of alphabet symbols\t"
+         << "space of B [byte]\t"
+         << "space of L1 [byte]\t"
+         << "space of L2 and L3 [byte]\t"
+         << "space of B, L1, L2 and L3 [byte]\t"
+         << "space of CRD (about 24MB) [byte]\t"
+         << "space of other data structures [byte]\t"
+         << "space of all data structures [byte]\t"
+         << "(space of B, L1, L2 and L3)/(# of input characters) * 100 [%]\t"
+         << "(space of all data structures)/(# of input characters) * 100 [%]\t"
+         << "compression time [sec]\t"
+         << endl;
+ }
+
   void SOLCA::PrintLogs(const uint64_t kCnt,
 			const double kTime) const{
     uint64_t B_space = BSpace();
@@ -167,20 +180,19 @@ namespace solca_comp {
     uint64_t W_space = dict_space + H_space + other_space;
 
     cout << kCnt << "\t"
-	 << NumRules() << "\t"
-	 << DictNumRules() << "\t"
-	 << B_space << "\t"
-	 << L1space << "\t"
-	 << L2L3space << "\t"
-	 << dict_space << "\t"
-	 << H_space << "\t"
-	 << other_space << "\t"
-	 << W_space << "\t" 
-	 << static_cast<double>(dict_space)/static_cast<double>(kCnt)*100 << "\t"
-	 << static_cast<double>(W_space)/static_cast<double>(kCnt)*100 << "\t"
-	 << kTime << "\t"
-	 << endl;
-
+         << NumRules() << "\t"
+         << B_space << "\t"
+         << L1space << "\t"
+         << L2L3space << "\t"
+         << dict_space << "\t"
+         << H_space << "\t"
+         << other_space << "\t"
+         << W_space << "\t"
+         << static_cast<double>(dict_space)/static_cast<double>(kCnt)*100 << "\t"
+      << static_cast<double>(W_space)/static_cast<double>(kCnt)*100 << "\t"
+         << kTime << "\t"
+         << endl;
+    
   }
   
   double SOLCA::GetTimeOfDaySec() const{
@@ -190,34 +202,48 @@ namespace solca_comp {
   }
   
   uint64_t SOLCA::Compress(const string& kInputFileName,
-			   const string& kOutputFileName,
-			   const bool    kEraseBr){
+                           const string& kOutputFileName,
+                           const bool    kEraseBr,
+                           const bool    kPrintLogs){
     ifstream ifs(kInputFileName.c_str());
     double start = GetTimeOfDaySec();
     Init(kOutputFileName);
 
     uint64_t cnt = 0;
-   for (char c; ifs && ifs.get(c);) {
+    if(kPrintLogs){
+      PrintColumns();
+    }
+    for (char c; ifs && ifs.get(c);) {
       if (kEraseBr) {
-	if (c == '\n') continue;
+        if (c == '\n') continue;
       }
-      if (cnt % 10000000ULL == 0) {
-	PrintLogs(cnt,
-		 GetTimeOfDaySec() - start);
-      }  
+      if(kPrintLogs){
+        if (cnt % 10000000ULL == 0) {
+          PrintLogs(cnt,
+                    GetTimeOfDaySec() - start);
+        }
+      }
       sposlp_.PushToBuffer((uint8_t)c);
       BuildPOSLP(Node(c), 0);
       ++cnt;
     }
-    PrintLogs(cnt,
-	     GetTimeOfDaySec() - start);
-    ProcessLastSymbols(cnt,
-		       start);
-    PrintLogs(cnt,
-	     GetTimeOfDaySec() - start);
+    if(kPrintLogs){
+      PrintLogs(cnt,
+                GetTimeOfDaySec() - start);
+    }
+    ProcessLastSymbols();
+    if(kPrintLogs){
+      PrintLogs(cnt,
+                GetTimeOfDaySec() - start);
+    }
+    else{
+      cout << "compression time [sec]: "
+           << GetTimeOfDaySec() - start
+           << endl;
+    }
     sposlp_.Clear();
     return 1;
   }
-  
+
 } //namespace solca_comp
 

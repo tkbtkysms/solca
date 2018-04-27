@@ -52,8 +52,9 @@ namespace solca_comp {
     void Init(const std::string& kOutputFileName);
     
     uint64_t Compress(const std::string& kInputFileName,
-		      const std::string& kOutputFileName,
-		      const bool kEraseBr);
+                      const std::string& kOutputFileName,
+                      const bool kEraseBr,
+                      const bool kPrintLogs);
     uint64_t Decompress(const std::string& kInputFileName,
 			const std::string& kOutputFileName);
 
@@ -71,8 +72,7 @@ namespace solca_comp {
 			  std::ofstream &ofs);
     inline uint64_t AlphabetReduction(const uint64_t kFirst,
 				      const uint64_t kSecond) const;
-    void ProcessLastSymbols(const uint64_t kCnt,
-			    const double kStart);
+    void ProcessLastSymbols();
     //space infromations
     uint64_t BSpace() const;
     uint64_t L1Space() const;
@@ -84,8 +84,9 @@ namespace solca_comp {
     uint64_t NumRules() const;
     uint64_t DictNumRules() const;
     uint64_t WriteSize() const;
+    void   PrintColumns() const;
     void   PrintLogs(const uint64_t kCnt,
-		     const double kTime) const;
+                     const double kTime) const;
     double GetTimeOfDaySec() const;
 }; // class SOLCA
 
