@@ -26,12 +26,12 @@ DECOMP =\
 	decompress_main.cpp\
 
 OCOMMON = $(COMMON:%.cpp=%.o)
-OCOMP = $(COMP:%.cpp=%.o)	
+OCOMP = $(COMP:%.cpp=%.o)
 ODECOMP = $(DECOMP:%.cpp=%.o)
 
 all: compress decompress
 
-compress:  $(OCOMMON) $(OCOMP) 
+compress:  $(OCOMMON) $(OCOMP)
 	$(CXX) $(CXXFLAGS) $(OTHERFLAGS) $(OCOMMON) $(OCOMP) $(LINKFLAGS) -o compress
 
 decompress: $(OCOMMON) $(ODECOMP)

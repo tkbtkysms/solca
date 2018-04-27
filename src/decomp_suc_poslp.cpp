@@ -87,7 +87,6 @@ namespace solca_comp {
 	  input.SetBits(kBlockSize, tmp_input.GetBits(0,kBlockSize), kBlockSize);
 	  tmp_leaf = input.GetBits(bit_pos, leaf_bits);
 	  input.SetBits(0, tmp_input.GetBits(0, kBlockSize), kBlockSize);
-	  input.SetBits(1, 0, kBlockSize);
 	  tmp_input.SetBits(0,0,kBlockSize);
 	  bit_pos = (bit_pos + leaf_bits) - kBlockSize;
 	}
