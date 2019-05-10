@@ -242,7 +242,7 @@ namespace solca_comp {
            << endl;
     }
     sposlp_.Clear();
-    return 1;
+    return 0;
   }
 
 } //namespace solca_comp

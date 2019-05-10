@@ -82,31 +82,28 @@ namespace solca_comp {
     input.Resize(2, kBlockSize);
     for(uint64_t i = 0; i < sfbt_.Length(); i++){
       if(sfbt_.Get(i) == kOP){
-	if((bit_pos + leaf_bits) >= kBlockSize){
-	  tmp_input.Load(ifs, 1, kBlockSize);
-	  input.SetBits(kBlockSize, tmp_input.GetBits(0,kBlockSize), kBlockSize);
-	  tmp_leaf = input.GetBits(bit_pos, leaf_bits);
-	  input.SetBits(0, tmp_input.GetBits(0, kBlockSize), kBlockSize);
-	  tmp_input.SetBits(0,0,kBlockSize);
-	  bit_pos = (bit_pos + leaf_bits) - kBlockSize;
-	}
-	else{
-	  tmp_leaf = input.GetBits(bit_pos, leaf_bits);
-	  bit_pos += leaf_bits;
-	}
-	leave_.PushBack(tmp_leaf, inner_rank);
-	leaf_rank++;
+        if((bit_pos + leaf_bits) >= kBlockSize){
+          tmp_input.Load(ifs, 1, kBlockSize);
+          input.SetBits(kBlockSize, tmp_input.GetBits(0,kBlockSize), kBlockSize);
+          tmp_leaf = input.GetBits(bit_pos, leaf_bits);
+          input.SetBits(0, tmp_input.GetBits(0, kBlockSize), kBlockSize);
+          tmp_input.SetBits(0,0,kBlockSize);
+          bit_pos = (bit_pos + leaf_bits) - kBlockSize;
+        }
+        else{
+          tmp_leaf = input.GetBits(bit_pos, leaf_bits);
+          bit_pos += leaf_bits;
+        }
+        leave_.PushBack(tmp_leaf, inner_rank);
+        leaf_rank++;
       }
       else{
-	inner_rank++;
-	if(inner_rank >= max_code){
-	  leaf_bits++;
-	  max_code = 1 << leaf_bits;
-	}
+        inner_rank++;
+        if(inner_rank >= max_code){
+          leaf_bits++;
+          max_code = 1 << leaf_bits;
+        }
       }
-    }
-    for(uint64_t i = kAlphabetSize; i < sfbt_.InRank(sfbt_.Length() - 1) + kAlphabetSize - 1;i++){
-
     }
   }
 
@@ -120,7 +117,7 @@ namespace solca_comp {
     RepeatDecompress(sfbt_.InRank(sfbt_.Length() - 1) + kAlphabetSize  - 2,
 		     ofs);
     ofs.close();
-    return 1;
+    return 0;
   }
 
 }//solca_comp
