@@ -240,6 +240,9 @@ namespace solca_comp {
       cout << "compression time [sec]: "
            << GetTimeOfDaySec() - start
            << endl;
+      cout << "#production rules: "
+           << NumRules() - kAlphabetSize
+           << endl;
     }
     sposlp_.Clear();
     return 0;
