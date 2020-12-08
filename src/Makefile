@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -O3 -W -Wall -Wno-deprecated
+CXXFLAGS = -std=c++11 -Ofast -W -Wall -Wno-deprecated -march=native -mtune=native 
 LINKFLAGS = -lm
 
 COMMON =\
@@ -28,8 +28,14 @@ DECOMP =\
 OCOMMON = $(COMMON:%.cpp=%.o)
 OCOMP = $(COMP:%.cpp=%.o)
 ODECOMP = $(DECOMP:%.cpp=%.o)
+DCOMMON = $(COMMON:%.cpp=%.d)
+DCOMP = $(COMP:%.cpp=%.d)
+DDECOMP = $(DECOMP:%.cpp=%.d)
+DEPS := $(DCOMMON) $(DCOMP) $(DDECOMP)
 
 all: compress decompress
+
+-include $(DEPS)
 
 compress:  $(OCOMMON) $(OCOMP)
 	$(CXX) $(CXXFLAGS) $(OTHERFLAGS) $(OCOMMON) $(OCOMP) $(LINKFLAGS) -o compress
@@ -41,12 +47,17 @@ debug:
 	make all CXXFLAGS="-ggdb -W -Wall -pedantic"
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) $(OTHERFLAGS) -c $<
+	$(CXX) $(CXXFLAGS) $(OTHERFLAGS) -c -MMD $< -o $@
 
 %.o: %.c
-	$(CXX) $(CXXFLAGS) $(OHTERFLAGS) -c $<
+	$(CXX) $(CXXFLAGS) $(OHTERFLAGS) -c -MMD $< -o $@
 
 clean:
-	rm -f compress decompress *.o *~
+	rm -f compress decompress $(DEPS) *.o *~
 
 
+ifeq ($(or ${IS_DRYRUN},${ONLY_CLEAN}),)
+  -include ${DEPS}
+endif
+
+.PHONY: all clean

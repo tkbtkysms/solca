@@ -32,18 +32,21 @@ SOFTWARE.
 #include <cstdlib>
 #include <fstream>
 #include <vector>
+#include <x86intrin.h>
+#include <functional>
 #include "common_functions.hpp"
 #include "obp_constants.hpp"
 #include "bit_vector.hpp"
 
-namespace solca_comp{
+namespace solca_comp
+{
 
   //balanced parenthes supporting the append operation.
 
-  class OnlineBP{
+  class OnlineBP
+  {
   private:
-
-    size_t n_; //the length of BP
+    size_t n_;    //the length of BP
     size_t size_; // the bytes of onlineBP
 
     size_t N_; // the reserved length of BP
@@ -51,32 +54,32 @@ namespace solca_comp{
 
     std::vector<uint8_t> exA_; // excess array
     // min tree
-    std::vector<std::vector<uint8_t> > minA_;// min array of each level
+    std::vector<std::vector<uint8_t>> minA_; // min array of each level
     std::vector<uint64_t> minNextA_;
     std::vector<uint64_t> minPrevA_;
     //outer rank/select
     std::vector<uint8_t> outerRankLA_;
     std::vector<uint64_t> outerRankHA_;
     std::vector<uint64_t> outerSelHA_;
-  
+
     uint32_t last_ex_; // the last value of excess
-    uint64_t curOuterRank_; 
-  
+    uint64_t curOuterRank_;
+
   public:
-    OnlineBP(): n_(),
-		size_(),
-		N_(),
-		BP_(),
-		exA_(),
-		minA_(),
-		minNextA_(),
-		minPrevA_(),
-		outerRankLA_(),
-		outerRankHA_(),
-		outerSelHA_(),
-		last_ex_(),
-		curOuterRank_(){}
-    ~OnlineBP(){}
+    OnlineBP() : n_(),
+                 size_(),
+                 N_(),
+                 BP_(),
+                 exA_(),
+                 minA_(),
+                 minNextA_(),
+                 minPrevA_(),
+                 outerRankLA_(),
+                 outerRankHA_(),
+                 outerSelHA_(),
+                 last_ex_(),
+                 curOuterRank_() {}
+    ~OnlineBP() {}
 
     //Initilization and free of space
     void Init();
@@ -89,85 +92,91 @@ namespace solca_comp{
     int L();
     uint32_t Get(uint64_t i);
     uint64_t GetBits(uint64_t i,
-		     uint32_t d);
-  
+                     uint32_t d);
+
     //setters
     void Push(const int c);
 
-
     //rank/select operations
     uint64_t Rank(uint64_t i,
-		  int c);
+                  int c);
     uint64_t Select(uint64_t i,
-		    int c);
+                    int c);
     uint64_t OuterRank(uint64_t i);
     uint64_t OuterSelect(uint64_t i);
 
     //back/forword search
     uint64_t Bwd(const uint64_t i,
-		 int32_t d);
+                 int32_t d);
     uint64_t Fwd(const uint64_t i,
-		 int32_t d);
-  
+                 int32_t d);
+
     //Save and Load
-    void Save(std::ofstream &ofs);  
+    void Save(std::ofstream &ofs);
     void Load(std::ifstream &ifs);
 
-  
   private:
     uint32_t Depth(uint64_t i);
     //rank/select operations for middle/mini blocks
     inline uint64_t FwdSel64(uint64_t x, uint64_t &i);
     uint64_t FwdSel(uint64_t block_pos,
-		    uint64_t i);
+                    uint64_t i);
     uint64_t FwdSel_0(uint64_t block_pos,
-		      uint64_t i);
+                      uint64_t i);
     inline uint64_t FwdCnt(uint64_t block_pos,
-			   uint64_t local_pos);
+                           uint64_t local_pos);
     inline uint64_t FwdSelOuter64(uint64_t x,
-				  uint64_t y,			     
-				  uint64_t &i);
+                                  uint64_t y,
+                                  uint64_t &i);
     uint64_t FwdSelOuter(uint64_t block_pos,
-			 uint64_t i);
+                         uint64_t i);
     inline uint64_t FwdCntOuter(uint64_t block_pos,
-				uint64_t i);
-  
+                                uint64_t i);
+
     //sub routines of forword serch and back word search
     uint64_t BwdWords(const uint64_t block_pos,
-		      const uint32_t end_pos,
-		      const uint32_t num_words,
-		      int32_t &d);
+                      const uint32_t end_pos,
+                      const uint32_t num_words,
+                      int32_t &d);
     uint64_t FwdWords(uint64_t block_pos,
-		      const uint32_t beg_pos,
-		      const uint32_t num_words,
-		      int32_t &d);
- 
-  
+                      const uint32_t beg_pos,
+                      const uint32_t num_words,
+                      int32_t &d);
+
   }; //class Onlinebp
 
-
-  // inline implementations 
+  // inline implementations
 
   inline uint64_t OnlineBP::FwdSel64(uint64_t x,
-				     uint64_t &i)
+                                     uint64_t &i)
   {
-    for (int j = 0; j < 8; ++j) {
+#ifdef __AVX2__
+    uint64_t y = CFunc::PopCnt(x);
+    uint64_t z = i <= y ? _pdep_u64((1LL << (y - i)), x) : 0;
+    i -= y;
+    return _lzcnt_u64(z);
+#else
+    for (int j = 0; j < 8; ++j)
+    {
       const uint_fast8_t w = x >> 56;
       const uint64_t c = kCNT_TBL[w];
-      if (i <= c) {
-	return j*8 + kSel8Tbl[((i-1)<<8) + w];
+      if (i <= c)
+      {
+        return j * 8 + kSel8Tbl[((i - 1) << 8) + w];
       }
       i -= c;
       x <<= 8;
     }
     return 64;
+#endif
   }
 
   inline uint64_t OnlineBP::FwdCnt(uint64_t block_pos,
-				   uint64_t local_pos)
+                                   uint64_t local_pos)
   {
     uint64_t ret = 0;
-    while(local_pos >= kMidBlock.size) {
+    while (local_pos >= kMidBlock.size)
+    {
       ret += CFunc::PopCnt(BP_.GetBlock(block_pos++));
       local_pos -= kMidBlock.size;
     }
@@ -176,54 +185,114 @@ namespace solca_comp{
   }
 
   inline uint64_t OnlineBP::FwdSelOuter64(uint64_t x,
-					  uint64_t y,
-					  uint64_t &i)
+                                          uint64_t y,
+                                          uint64_t &i)
   {
-    for (int j = 0; j < 7; ++j) {
+#ifdef __AVX2__
+    const uint64_t a = 0b1101101101101101101101101101101101101101101101101101101101101101;
+    const uint64_t b = 0b1001001001001001001001001001001001001001001001001001001001001001;
+    uint64_t z = ~(x ^ a);
+    z = z & (z << 1) & (z << 2) & b;
+    uint64_t v = ~(((x << 1) | (y >> 63)) ^ a);
+    v = v & (v << 1) & (v << 2) & b;
+    uint64_t w2 = ~(((x << 2) | (y >> 62)) ^ a);
+    uint64_t last = ((((x << 2) | (y >> 62)) & 0x0000000000000007) == 6ULL);
+    w2 = w2 & (w2 << 1) & (w2 << 2) & b;
+    z += (v >> 1) + (w2 >> 2) + last;
+    uint64_t c1 = CFunc::PopCnt(z);
+    uint64_t d = i <= c1 ? _pdep_u64((1LL << (c1 - i)), z) : 0;
+    i -= c1;
+    return _lzcnt_u64(d);
+#else
+    for (uint64_t j = 0; j < 7; ++j)
+    {
       const uint32_t w = x >> 54;
       const uint64_t c = kOuter8Tbl[w];
-      if (i <= c) {
-	return j*8 + kOuter8Tbl[(i<<10) + w];
+      if (i <= c)
+      {
+        return j * 8 + kOuter8Tbl[(i << 10) + w];
       }
       i -= c;
       x <<= 8;
     }
     const uint32_t w = (x >> 54) | (y >> 62);
     const uint64_t c = kOuter8Tbl[w];
-    if (i <= c) {
-      return 56 + kOuter8Tbl[(i<<10) + w];
+    if (i <= c)
+    {
+      return 56 + kOuter8Tbl[(i << 10) + w];
     }
     i -= c;
     return 64;
+#endif
   }
 
-
   inline uint64_t OnlineBP::FwdCntOuter(uint64_t block_pos,
-					uint64_t i)
+                                        uint64_t i)
   {
+#ifdef __AVX2__
+    const uint64_t a = 0b1101101101101101101101101101101101101101101101101101101101101101;
+    const uint64_t b = 0b1001001001001001001001001001001001001001001001001001001001001001;
+    uint64_t block_pos2 = block_pos;
+    uint64_t ret2 = 0;
+    for (uint64_t j = 0; j < (i >> 6); ++j)
+    {
+      uint64_t x = BP_.GetBlock(block_pos2++);
+      uint64_t y = BP_.GetBlock(block_pos2);
+      uint64_t z = ~(x ^ a);
+      z = z & (z << 1) & (z << 2) & b;
+      uint64_t v = ~(((x << 1) | (y >> 63)) ^ a);
+      v = v & (v << 1) & (v << 2) & b;
+      uint64_t w2 = ~(((x << 2) | (y >> 62)) ^ a);
+      uint64_t last = ((((x << 2) | (y >> 62)) & 0x0000000000000007) == 6ULL);
+      w2 = w2 & (w2 << 1) & (w2 << 2) & b;
+      z += (v >> 1) + (w2 >> 2) + last;
+      ret2 += CFunc::PopCnt(z);
+    }
+    {
+      uint64_t x = BP_.GetBlock(block_pos2++);
+      uint64_t y = BP_.GetBlock(block_pos2);
+      uint64_t z = ~(x ^ a);
+      z = z & (z << 1) & (z << 2) & b;
+      uint64_t v = ~(((x << 1) | (y >> 63)) ^ a);
+      v = v & (v << 1) & (v << 2) & b;
+      uint64_t w2 = ~(((x << 2) | (y >> 62)) ^ a);
+      uint64_t last = ((((x << 2) | (y >> 62)) & 0x0000000000000007) == 6ULL);
+      w2 = w2 & (w2 << 1) & (w2 << 2) & b;
+      z += (v >> 1) + (w2 >> 2) + last;
+
+      ret2 += CFunc::PopCnt(z >> (63 - (i & ((1ULL << 6) - 1))));
+    }
+    return ret2;
+#else
     uint64_t ret = 0;
     uint64_t x = 0;
     uint32_t w = 0;
-    const uint64_t t = i/8 + 1;
-    for (uint32_t j = 0; j < t; ++j) {
-      if (j % 8 == 0) {
-	x = BP_.GetBlock(block_pos++);
-	w = x >> 54;
-	x <<= 8;
-	x |= BP_.GetBlock(block_pos) >> 56;
-      } else {
-	w = x >> 54;
-	x <<= 8;
+    const uint64_t t = (i >> 3) + 1;
+    for (uint32_t j = 0; j < t; ++j)
+    {
+      if (j % 8 == 0)
+      {
+        x = BP_.GetBlock(block_pos++);
+        w = x >> 54;
+        x <<= 8;
+        x |= BP_.GetBlock(block_pos) >> 56;
       }
-      if (j == t-1) {
-	w |= 0x7f >> (i % 8);
+      else
+      {
+        w = x >> 54;
+        x <<= 8;
+      }
+      if (j == t - 1)
+      {
+        w |= 0x7f >> (i % 8);
       }
       ret += kOuter8Tbl[w];
     }
+
     return ret;
+#endif
   }
 
-}//namespace solca_comp
-  
-#endif // ONLINE_BP_HPP_
+} //namespace solca_comp
 
+#endif // ONLINE_BP_HPP_
