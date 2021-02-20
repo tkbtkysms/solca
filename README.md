@@ -30,7 +30,23 @@ options:
   -n, --naive_encoding     decompress from the naive encoding of solca's grammar (bool [=0])
   -?, --help               print this message
 ```
-  
+# execution examples
+## build from input_file the SOLCA's grammar in succinct space and output the succinct enconding of the SOLCA's grmmar (compressed file)
+```
+$ ./compress -i input_file -o compressed_file
+```
+## decompress from the succinct encoding of SOLCA's grammar (compressed_file)
+```
+$ ./decompress -i compressd_file -o decompressed_file
+```
+## build from input_file the SOLCA's grammar in succinct space and output the naive encoding of the SOLCA's grammar
+```
+$ ./compress -i input_file -o compressed_file -n 1
+```
+## decompress from the naive representation of SOLCA's grammar
+```
+$ ../decompress -i compressed_file -o decompressed_file -n 1
+```
 # experiments for [repetitive texts of Pizza & chili corpus](http://pizzachili.dcc.uchile.cl/repcorpus/real/)
 ## comparison methods
 FOLCA: [1].  
