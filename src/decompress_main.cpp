@@ -24,6 +24,7 @@ SOFTWARE.
 
 #include <string>
 #include "decomp_suc_poslp.hpp"
+#include "poslp.hpp"
 #include "cmdline.h"
 
 using namespace std;
@@ -31,16 +32,25 @@ using namespace std;
 int main(int argc, char *argv[])
 {
   cmdline::parser p;
-  p.add<string>("compressed_file",  'i', "compressed file name",  true);
+  p.add<string>("compressed_file", 'i', "compressed file name", true);
   p.add<string>("output_file", 'o', "output file name", true);
+  p.add<bool>("naive_encoding", 'n', "decompress the naive encoding of solca's grammar", false, false);
 
   p.parse_check(argc, argv);
-  const string input_file   = p.get<string>("compressed_file");
-  const string output_file  = p.get<string>("output_file");
+  const string input_file = p.get<string>("compressed_file");
+  const string output_file = p.get<string>("output_file");
+  const bool naive_encoding = p.get<bool>("naive_encoding");
 
-  solca_comp::DSucPOSLP dsuc_poslp;
-  
-  return dsuc_poslp.Decompress(input_file, 
-			       output_file);
+  if (naive_encoding)
+  {
+    solca_comp::POSLP poslp;
+    return poslp.Decompress(input_file,
+                            output_file);
+  }
+  else
+  {
+    solca_comp::DSucPOSLP dsuc_poslp;
+    return dsuc_poslp.Decompress(input_file,
+                                 output_file);
+  }
 }
-

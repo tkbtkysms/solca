@@ -36,37 +36,38 @@ SOFTWARE.
 #include "suc_fbtree.hpp"
 #include "inner_leaf.hpp"
 
-namespace solca_comp{
+namespace solca_comp
+{
   //the succinct data structure of post-order straight line program for decompression
   //this supports accessing production rules in constant time
   //using 2n + n\lg (n + \sigma) + o(n) bits of space.
-  class DSucPOSLP {
+  class DSucPOSLP
+  {
   private:
-    //sunccinct data structure 
-    SucFBTree sfbt_; 
+    //sunccinct data structure
+    SucFBTree sfbt_;
     InnerLeaf leave_;
-  
+
   public:
     //constructor and destructor
-    DSucPOSLP(): sfbt_(), 
-		 leave_(){};
-    ~DSucPOSLP() {};
-  
+    DSucPOSLP() : sfbt_(),
+                  leave_(){};
+    ~DSucPOSLP(){};
+
     uint64_t Decompress(const std::string &kInputFileName,
-			const std::string &kOutputFileName);
-  
+                        const std::string &kOutputFileName);
+
   private:
-    //accessing POSLP 
+    //accessing POSLP
     uint64_t Left(const uint64_t kVar);
     uint64_t Right(const uint64_t kVar);
-  
+
     //decompression method
     void RepeatDecompress(const uint64_t kVar,
-			  std::ofstream &ofs);
+                          std::ofstream &ofs);
     //save and load
     void Load(std::ifstream &ifs);
-  
-    
+
     // transformation of the variable of post order straight line program
     //to the variable of succinct full binary tree
     // and the reversed transformation
@@ -75,17 +76,19 @@ namespace solca_comp{
   }; // class DSucPOLSP
 
   //inline implementations
-  inline uint64_t DSucPOSLP::Var2SFBTVar(const uint64_t kVar) {
-    if (kVar < kAlphabetSize){
+  inline uint64_t DSucPOSLP::Var2SFBTVar(const uint64_t kVar)
+  {
+    if (kVar < kAlphabetSize)
+    {
       return kDummyCode;
     }
     return kVar - kAlphabetSize;
   }
 
-  inline uint64_t DSucPOSLP::SFBTVar2Var(const uint64_t kVar) {
+  inline uint64_t DSucPOSLP::SFBTVar2Var(const uint64_t kVar)
+  {
     return kVar + kAlphabetSize;
   }
 } //namespace solca_comp
 
 #endif // DECOMP_SUC_POSLP_HPP_
-

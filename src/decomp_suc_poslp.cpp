@@ -8,7 +8,7 @@ of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+furnished t o do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
@@ -26,47 +26,58 @@ SOFTWARE.
 
 using namespace std;
 
-namespace solca_comp {
+namespace solca_comp
+{
 
-  uint64_t DSucPOSLP::Left(const uint64_t kVar){
-    if(kVar < kAlphabetSize){
+  uint64_t DSucPOSLP::Left(const uint64_t kVar)
+  {
+    if (kVar < kAlphabetSize)
+    {
       return kVar;
     }
     const uint64_t kSFBTPos = sfbt_.LeftChild(sfbt_.InSelect(Var2SFBTVar(kVar) + 1));
 
-    if (sfbt_.IsLeaf(kSFBTPos)) {
+    if (sfbt_.IsLeaf(kSFBTPos))
+    {
       return leave_.Get(sfbt_.LeafRank(kSFBTPos) - 1,
-			sfbt_.InRank(kSFBTPos) + kAlphabetSize);
+                        sfbt_.InRank(kSFBTPos) + kAlphabetSize);
     }
     return SFBTVar2Var(sfbt_.InRank(kSFBTPos) - 1);
   }
 
-  uint64_t DSucPOSLP::Right(const uint64_t kVar){
-    if(kVar < kAlphabetSize){
+  uint64_t DSucPOSLP::Right(const uint64_t kVar)
+  {
+    if (kVar < kAlphabetSize)
+    {
       return kVar;
     }
     const uint64_t kSFBTPos = sfbt_.RightChild(sfbt_.InSelect(Var2SFBTVar(kVar) + 1));
-    if (sfbt_.IsLeaf(kSFBTPos)) {
+    if (sfbt_.IsLeaf(kSFBTPos))
+    {
       return leave_.Get(sfbt_.LeafRank(kSFBTPos) - 1,
-			sfbt_.InRank(kSFBTPos) + kAlphabetSize);
+                        sfbt_.InRank(kSFBTPos) + kAlphabetSize);
     }
     return SFBTVar2Var(sfbt_.InRank(kSFBTPos) - 1);
   }
 
   void DSucPOSLP::RepeatDecompress(const uint64_t kVar,
-				   ofstream &ofs){
-    if(kVar < kAlphabetSize){
+                                   ofstream &ofs)
+  {
+    if (kVar < kAlphabetSize)
+    {
       ofs << (char)kVar;
     }
-    else{
+    else
+    {
       RepeatDecompress(Left(kVar),
-		       ofs);
+                       ofs);
       RepeatDecompress(Right(kVar),
-		       ofs);
+                       ofs);
     }
   }
 
-  void DSucPOSLP::Load(ifstream &ifs){
+  void DSucPOSLP::Load(ifstream &ifs)
+  {
     sfbt_.Load(ifs);
     FLCVector input;
     FLCVector tmp_input;
@@ -77,29 +88,35 @@ namespace solca_comp {
     uint64_t leaf_rank = 0;
     uint64_t inner_rank = kAlphabetSize;
     leave_.Init(9);
-    
+
     input.Load(ifs, 1, kBlockSize);
     input.Resize(2, kBlockSize);
-    for(uint64_t i = 0; i < sfbt_.Length(); i++){
-      if(sfbt_.Get(i) == kOP){
-        if((bit_pos + leaf_bits) >= kBlockSize){
+    for (uint64_t i = 0; i < sfbt_.Length(); i++)
+    {
+      if (sfbt_.Get(i) == kOP)
+      {
+        if ((bit_pos + leaf_bits) >= kBlockSize)
+        {
           tmp_input.Load(ifs, 1, kBlockSize);
-          input.SetBits(kBlockSize, tmp_input.GetBits(0,kBlockSize), kBlockSize);
+          input.SetBits(kBlockSize, tmp_input.GetBits(0, kBlockSize), kBlockSize);
           tmp_leaf = input.GetBits(bit_pos, leaf_bits);
           input.SetBits(0, tmp_input.GetBits(0, kBlockSize), kBlockSize);
-          tmp_input.SetBits(0,0,kBlockSize);
+          tmp_input.SetBits(0, 0, kBlockSize);
           bit_pos = (bit_pos + leaf_bits) - kBlockSize;
         }
-        else{
+        else
+        {
           tmp_leaf = input.GetBits(bit_pos, leaf_bits);
           bit_pos += leaf_bits;
         }
         leave_.PushBack(tmp_leaf, inner_rank);
         leaf_rank++;
       }
-      else{
+      else
+      {
         inner_rank++;
-        if(inner_rank >= max_code){
+        if (inner_rank >= max_code)
+        {
           leaf_bits++;
           max_code = 1 << leaf_bits;
         }
@@ -107,17 +124,18 @@ namespace solca_comp {
     }
   }
 
-  uint64_t DSucPOSLP::Decompress(const string& kInputFileName,
-				 const string& kOutputFileName){
+  uint64_t DSucPOSLP::Decompress(const string &kInputFileName,
+                                 const string &kOutputFileName)
+  {
     ifstream ifs(kInputFileName.c_str());
     ofstream ofs(kOutputFileName.c_str());
-  
+
     Load(ifs);
     ifs.close();
-    RepeatDecompress(sfbt_.InRank(sfbt_.Length() - 1) + kAlphabetSize  - 2,
-		     ofs);
+    RepeatDecompress(sfbt_.InRank(sfbt_.Length() - 1) + kAlphabetSize - 2,
+                     ofs);
     ofs.close();
     return 0;
   }
 
-}//solca_comp
+} // namespace solca_comp

@@ -59,12 +59,19 @@ namespace solca_comp
   }
 
   //pushing back a symbol to data structures.
-  void SucPOSLP::PushLastCP()
+  void SucPOSLP::PushLastCP(const bool kNaiveEncoding)
   {
     sfbt_.PushBack(kCP);
     ofstream ofs;
     ofs.open(output_file_name_.c_str());
-    Save(ofs);
+    if (!kNaiveEncoding)
+    {
+      Save(ofs);
+    }
+    else
+    {
+      SaveNaiveEncoding(ofs);
+    }
     ofs.close();
   }
 
@@ -379,6 +386,17 @@ namespace solca_comp
     if (bit_pos != 0)
     {
       output.Save(ofs, 1, kBlockSize);
+    }
+  }
+
+  void SucPOSLP::SaveNaiveEncoding(ofstream &ofs)
+  {
+    for (uint64_t i = kAlphabetSize; i < num_rules_; ++i)
+    {
+      uint32_t var = Left(i);
+      ofs.write((char *)&var, sizeof(var));
+      var = Right(i);
+      ofs.write((char *)&var, sizeof(var));
     }
   }
 

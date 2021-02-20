@@ -26,133 +26,155 @@ SOFTWARE.
 
 using namespace std;
 
-namespace solca_comp {
-  
-  void SOLCA::Init(const string& kOutputFileName) {
+namespace solca_comp
+{
+
+  void SOLCA::Init(const string &kOutputFileName)
+  {
     sposlp_.Init(kOutputFileName);
     CFunc::ResizeVec(ques_,
-		     kMaxNumQue);
+                     kMaxNumQue);
     CFunc::ResizeVec(que_len_,
-		     kMaxNumQue);
+                     kMaxNumQue);
     max_level_ = 0;
-    for (uint64_t i = 0; i != kMaxNumQue; ++i) {
-      for(uint64_t j = 0; j < 3; j++){
-	ques_[i].push_back(Node());
+    for (uint64_t i = 0; i != kMaxNumQue; ++i)
+    {
+      for (uint64_t j = 0; j < 3; j++)
+      {
+        ques_[i].push_back(Node());
       }
       que_len_[i] = 3;
     }
   }
-  
-  bool SOLCA::HasLandmark(const uint64_t kLevel) const {
-    if (IsRepetition(kLevel, 1)){
+
+  bool SOLCA::HasLandmark(const uint64_t kLevel) const
+  {
+    if (IsRepetition(kLevel, 1))
+    {
       return true;
     }
-    else if (IsRepetition(kLevel, 2)){
+    else if (IsRepetition(kLevel, 2))
+    {
       return false;
     }
-    else if (IsRepetition(kLevel, 3)){
+    else if (IsRepetition(kLevel, 3))
+    {
       return true;
     }
-    else if (IsRepetition(kLevel, 0)){
+    else if (IsRepetition(kLevel, 0))
+    {
       return false;
     }
-    else if (IsMaximal(kLevel, 2)){
+    else if (IsMaximal(kLevel, 2))
+    {
       return false;
     }
     return true;
   }
-  
-  void SOLCA::BuildPOSLP(const Node& kNode, 
-			 const uint64_t kLevel) {
+
+  void SOLCA::BuildPOSLP(const Node &kNode,
+                         const uint64_t kLevel)
+  {
     ques_[kLevel].push_back(kNode);
     que_len_[kLevel]++;
-    if(max_level_ < kLevel){
+    if (max_level_ < kLevel)
+    {
       max_level_++;
     }
-    if (que_len_[kLevel] == 5) {
-      if (HasLandmark(kLevel)) {
-	PopFrontQue2(kLevel);
-	BuildPOSLP(sposlp_.ReverseAccessAndUpdate(ques_[kLevel][1],
-						  ques_[kLevel][2]),
-		   kLevel + 1);
+    if (que_len_[kLevel] == 5)
+    {
+      if (HasLandmark(kLevel))
+      {
+        PopFrontQue2(kLevel);
+        BuildPOSLP(sposlp_.ReverseAccessAndUpdate(ques_[kLevel][1],
+                                                  ques_[kLevel][2]),
+                   kLevel + 1);
       }
     }
-    else if (que_len_[kLevel] == 6) {
+    else if (que_len_[kLevel] == 6)
+    {
       PopFrontQue3(kLevel);
       Node middle = sposlp_.ReverseAccessAndUpdate(ques_[kLevel][1],
-						   ques_[kLevel][2]);
+                                                   ques_[kLevel][2]);
       BuildPOSLP(sposlp_.ReverseAccessAndUpdate(ques_[kLevel][0],
-						middle),
-		 kLevel + 1);			    
+                                                middle),
+                 kLevel + 1);
     }
   }
 
-  void SOLCA::ProcessLastSymbols() {
-    for (uint64_t level = 0; level < kMaxNumQue; ++level) {
+  void SOLCA::ProcessLastSymbols(const bool kNaiveEncoding)
+  {
+    for (uint64_t level = 0; level < kMaxNumQue; ++level)
+    {
       PopFrontQue3(level);
-      if (que_len_[level] == 1) {
-        if (ques_[level][0].symbol == sposlp_.NumRules() - 1 
-            && max_level_ == level) break;
+      if (que_len_[level] == 1)
+      {
+        if (ques_[level][0].symbol == sposlp_.NumRules() - 1 && max_level_ == level)
+          break;
         BuildPOSLP(ques_[level][0], level + 1);
       }
-      else if (que_len_[level] == 2) {
+      else if (que_len_[level] == 2)
+      {
         BuildPOSLP(sposlp_.ReverseAccessAndUpdate(ques_[level][0],
                                                   ques_[level][1]),
                    level + 1);
       }
     }
-    sposlp_.PushLastCP();
+    sposlp_.PushLastCP(kNaiveEncoding);
   }
-    
-  uint64_t  SOLCA::BSpace() const{
+
+  uint64_t SOLCA::BSpace() const
+  {
     return sposlp_.ByteSizeOfB();
   }
-  
-  uint64_t  SOLCA::L1Space() const{
+
+  uint64_t SOLCA::L1Space() const
+  {
     return sposlp_.ByteSizeOfL1();
   }
-    
-  uint64_t  SOLCA::L2L3Space() const{
+
+  uint64_t SOLCA::L2L3Space() const
+  {
     return sposlp_.ByteSizeOfL2L3();
   }
-    
-  uint64_t  SOLCA::LSpace() const{
+
+  uint64_t SOLCA::LSpace() const
+  {
     return sposlp_.ByteSizeOfL();
   }
 
-  uint64_t  SOLCA::HashSpace() const{
+  uint64_t SOLCA::HashSpace() const
+  {
     return sposlp_.ByteSizeOfHash();
   }
 
-  uint64_t SOLCA::OtherSpace() const{
-    return sposlp_.ByteSizeOfOther()
-      + ques_.size() * (sizeof(std::deque<Node>)
-			+ sizeof(Node) * kMaxQueLen)
-      + kMaxNumQue * sizeof(uint64_t)
-      + sizeof(SOLCA);
+  uint64_t SOLCA::OtherSpace() const
+  {
+    return sposlp_.ByteSizeOfOther() + ques_.size() * (sizeof(std::deque<Node>) + sizeof(Node) * kMaxQueLen) + kMaxNumQue * sizeof(uint64_t) + sizeof(SOLCA);
   }
 
-  uint64_t SOLCA::Space() const{
-    return sposlp_.ByteSize() 
-      + kMaxNumQue * (sizeof(std::deque<Node>)
-		      + sizeof(Node) * kMaxQueLen)
-      + kMaxNumQue * sizeof(uint64_t)
-      + sizeof(SOLCA);
+  uint64_t SOLCA::Space() const
+  {
+    return sposlp_.ByteSize() + kMaxNumQue * (sizeof(std::deque<Node>) + sizeof(Node) * kMaxQueLen) + kMaxNumQue * sizeof(uint64_t) + sizeof(SOLCA);
   }
 
-  uint64_t SOLCA::NumRules() const{
+  uint64_t SOLCA::NumRules() const
+  {
     return sposlp_.NumRules();
   }
 
-  uint64_t SOLCA::DictNumRules() const{
+  uint64_t SOLCA::DictNumRules() const
+  {
     return NumRules();
   }
 
-  uint64_t SOLCA::WriteSize() const{
+  uint64_t SOLCA::WriteSize() const
+  {
     return 0;
   }
-  
-  void SOLCA::PrintColumns() const{
+
+  void SOLCA::PrintColumns() const
+  {
     cout << "# of input characters\t"
          << "# of production rules + # of alphabet symbols\t"
          << "space of B [byte]\t"
@@ -166,10 +188,11 @@ namespace solca_comp {
          << "(space of all data structures)/(# of input characters) * 100 [%]\t"
          << "compression time [sec]\t"
          << endl;
- }
+  }
 
   void SOLCA::PrintLogs(const uint64_t kCnt,
-			const double kTime) const{
+                        const double kTime) const
+  {
     uint64_t B_space = BSpace();
     uint64_t L1space = L1Space();
     uint64_t L2L3space = L2L3Space();
@@ -188,37 +211,45 @@ namespace solca_comp {
          << H_space << "\t"
          << other_space << "\t"
          << W_space << "\t"
-         << static_cast<double>(dict_space)/static_cast<double>(kCnt)*100 << "\t"
-      << static_cast<double>(W_space)/static_cast<double>(kCnt)*100 << "\t"
+         << static_cast<double>(dict_space) / static_cast<double>(kCnt) * 100 << "\t"
+         << static_cast<double>(W_space) / static_cast<double>(kCnt) * 100 << "\t"
          << kTime << "\t"
          << endl;
-    
   }
-  
-  double SOLCA::GetTimeOfDaySec() const{
+
+  double SOLCA::GetTimeOfDaySec() const
+  {
     struct timeval tv;
     gettimeofday(&tv, NULL);
-    return tv.tv_sec + (double)tv.tv_usec*1e-6;
+    return tv.tv_sec + (double)tv.tv_usec * 1e-6;
   }
-  
-  uint64_t SOLCA::Compress(const string& kInputFileName,
-                           const string& kOutputFileName,
-                           const bool    kEraseBr,
-                           const bool    kPrintLogs){
+
+  uint64_t SOLCA::Compress(const string &kInputFileName,
+                           const string &kOutputFileName,
+                           const bool kEraseBr,
+                           const bool kPrintLogs,
+                           const bool kNaiveEncodeing)
+  {
     ifstream ifs(kInputFileName.c_str());
     double start = GetTimeOfDaySec();
     Init(kOutputFileName);
 
     uint64_t cnt = 0;
-    if(kPrintLogs){
+    if (kPrintLogs)
+    {
       PrintColumns();
     }
-    for (char c; ifs && ifs.get(c);) {
-      if (kEraseBr) {
-        if (c == '\n') continue;
+    for (char c; ifs && ifs.get(c);)
+    {
+      if (kEraseBr)
+      {
+        if (c == '\n')
+          continue;
       }
-      if(kPrintLogs){
-        if (cnt % 10000000ULL == 0) {
+      if (kPrintLogs)
+      {
+        if (cnt % 10000000ULL == 0)
+        {
           PrintLogs(cnt,
                     GetTimeOfDaySec() - start);
         }
@@ -227,16 +258,19 @@ namespace solca_comp {
       BuildPOSLP(Node(c), 0);
       ++cnt;
     }
-    if(kPrintLogs){
+    if (kPrintLogs)
+    {
       PrintLogs(cnt,
                 GetTimeOfDaySec() - start);
     }
-    ProcessLastSymbols();
-    if(kPrintLogs){
+    ProcessLastSymbols(kNaiveEncodeing);
+    if (kPrintLogs)
+    {
       PrintLogs(cnt,
                 GetTimeOfDaySec() - start);
     }
-    else{
+    else
+    {
       cout << "compression time [sec]: "
            << GetTimeOfDaySec() - start
            << endl;
@@ -249,4 +283,3 @@ namespace solca_comp {
   }
 
 } //namespace solca_comp
-

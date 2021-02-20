@@ -36,47 +36,51 @@ SOFTWARE.
 #include "constant_numbers.hpp"
 #include "succinct_poslp.hpp"
 
-namespace solca_comp {
-  class SOLCA {
+namespace solca_comp
+{
+  class SOLCA
+  {
   private:
-    std::vector<std::deque<Node> > ques_;
+    std::vector<std::deque<Node>> ques_;
     std::vector<uint64_t> que_len_;
     uint64_t max_level_;
     SucPOSLP sposlp_;
     const uint64_t kMaxQueLen = 6U;
     const uint64_t kMaxNumQue = 256U;
+
   public:
-    SOLCA(): ques_(),
-	     sposlp_(){}
-    ~SOLCA(){}
-    void Init(const std::string& kOutputFileName);
-    
-    uint64_t Compress(const std::string& kInputFileName,
-                      const std::string& kOutputFileName,
+    SOLCA() : ques_(),
+              sposlp_() {}
+    ~SOLCA() {}
+    void Init(const std::string &kOutputFileName);
+
+    uint64_t Compress(const std::string &kInputFileName,
+                      const std::string &kOutputFileName,
                       const bool kEraseBr,
-                      const bool kPrintLogs);
-    uint64_t Decompress(const std::string& kInputFileName,
-			const std::string& kOutputFileName);
+                      const bool kPrintLogs,
+                      const bool kNaiveEncoding);
+    uint64_t Decompress(const std::string &kInputFileName,
+                        const std::string &kOutputFileName);
 
   private:
     inline bool IsRepetition(const uint64_t kLevel,
-			     const uint64_t kPos) const;
-    inline bool IsMaximal(const uint64_t kLevel, 
-			  const uint64_t kPos) const;
+                             const uint64_t kPos) const;
+    inline bool IsMaximal(const uint64_t kLevel,
+                          const uint64_t kPos) const;
     bool HasLandmark(const uint64_t kLevel) const;
     inline void PopFrontQue2(const uint64_t kLevel);
     inline void PopFrontQue3(const uint64_t kLevel);
-    void BuildPOSLP(const Node& kNode, 
-		    const uint64_t kLevel);
+    void BuildPOSLP(const Node &kNode,
+                    const uint64_t kLevel);
     void RepeatDecompress(const uint64_t kVar,
-			  std::ofstream &ofs);
+                          std::ofstream &ofs);
     inline uint64_t AlphabetReduction(const uint64_t kFirst,
-				      const uint64_t kSecond) const;
-    void ProcessLastSymbols();
+                                      const uint64_t kSecond) const;
+    void ProcessLastSymbols(const bool kNavieEncoding);
     //space infromations
     uint64_t BSpace() const;
     uint64_t L1Space() const;
-    uint64_t L2L3Space() const;    
+    uint64_t L2L3Space() const;
     uint64_t LSpace() const;
     uint64_t HashSpace() const;
     uint64_t OtherSpace() const;
@@ -84,56 +88,65 @@ namespace solca_comp {
     uint64_t NumRules() const;
     uint64_t DictNumRules() const;
     uint64_t WriteSize() const;
-    void   PrintColumns() const;
-    void   PrintLogs(const uint64_t kCnt,
-                     const double kTime) const;
+    void PrintColumns() const;
+    void PrintLogs(const uint64_t kCnt,
+                   const double kTime) const;
     double GetTimeOfDaySec() const;
-}; // class SOLCA
+  }; // class SOLCA
 
   //inline implementations
-  inline bool SOLCA::IsRepetition(const uint64_t kLevel, 
-				  const uint64_t kPos) const {
-    if (ques_[kLevel][kPos].symbol == ques_[kLevel][kPos + 1].symbol){
+  inline bool SOLCA::IsRepetition(const uint64_t kLevel,
+                                  const uint64_t kPos) const
+  {
+    if (ques_[kLevel][kPos].symbol == ques_[kLevel][kPos + 1].symbol)
+    {
       return true;
-    }   
+    }
     return false;
   }
-  
+
   inline uint64_t SOLCA::AlphabetReduction(const uint64_t kFirst,
-					   const uint64_t kSecond) const{ 
-    
+                                           const uint64_t kSecond) const
+  {
+
     uint64_t diff_bit_pos = CFunc::LSB(kFirst ^ kSecond);
-    
-    if((kSecond >> diff_bit_pos) & kOne){
+
+    if ((kSecond >> diff_bit_pos) & kOne)
+    {
       return (diff_bit_pos << 1) + 1;
     }
-    else{
+    else
+    {
       return (diff_bit_pos << 1);
     }
   }
 
-  inline bool SOLCA::IsMaximal(const uint64_t kLevel, 
-			       const uint64_t kPos) const {
+  inline bool SOLCA::IsMaximal(const uint64_t kLevel,
+                               const uint64_t kPos) const
+  {
     uint64_t symbol1 = ques_[kLevel][kPos - 1].symbol;
     uint64_t symbol2 = ques_[kLevel][kPos].symbol;
-    
-    uint64_t middle = AlphabetReduction(symbol1,symbol2);
-    if (middle > AlphabetReduction(ques_[kLevel][kPos - 2].symbol,symbol1)
-	&& middle > AlphabetReduction(symbol2,ques_[kLevel][kPos + 1].symbol)) {
+
+    uint64_t middle = AlphabetReduction(symbol1, symbol2);
+    if (middle > AlphabetReduction(ques_[kLevel][kPos - 2].symbol, symbol1) && middle > AlphabetReduction(symbol2, ques_[kLevel][kPos + 1].symbol))
+    {
       return true;
     }
-    else{
+    else
+    {
       return false;
     }
   }
 
-  inline void SOLCA::PopFrontQue2(const uint64_t kLevel){
+  inline void SOLCA::PopFrontQue2(const uint64_t kLevel)
+  {
     ques_[kLevel].pop_front();
     ques_[kLevel].pop_front();
     que_len_[kLevel] -= 2;
   }
 
-  inline void SOLCA::PopFrontQue3(const uint64_t kLevel){
+  inline void SOLCA::PopFrontQue3(const uint64_t kLevel)
+  {
     ques_[kLevel].pop_front();
     ques_[kLevel].pop_front();
     ques_[kLevel].pop_front();

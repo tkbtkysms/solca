@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -std=c++11 -Ofast -W -Wall -Wno-deprecated -march=native -mtune=native 
+CXXFLAGS = -std=c++11 -Ofast -W -Wall -Wno-deprecated -march=native -mtune=native -DNDEBUG
 LINKFLAGS = -lm
 
 COMMON =\
@@ -22,6 +22,7 @@ COMP =\
 	compress_main.cpp\
 
 DECOMP =\
+	poslp.cpp\
 	decomp_suc_poslp.cpp\
 	decompress_main.cpp\
 

@@ -38,20 +38,24 @@ SOFTWARE.
 #include "out_leaf.hpp"
 #include "freq_crdict.hpp"
 
-namespace solca_comp {
+namespace solca_comp
+{
 
   //node of POSLP before encoding
-  class Node{
+  class Node
+  {
   public:
     uint64_t symbol;
     bool is_inner;
+
   public:
-    Node(): symbol(kDummyCode),
-	    is_inner(false){}
-    Node(const uint8_t kChar): symbol(kChar),
-			       is_inner(false){}
+    Node() : symbol(kDummyCode),
+             is_inner(false) {}
+    Node(const uint8_t kChar) : symbol(kChar),
+                                is_inner(false) {}
     void Set(const uint64_t kSymbol,
-	     const bool kIsInner){
+             const bool kIsInner)
+    {
       symbol = kSymbol;
       is_inner = kIsInner;
     }
@@ -61,13 +65,14 @@ namespace solca_comp {
   //this supports access/reverse access of production rules and pushing back
   // a new character in O(\lg\lg n) time
   //using n\lg (n + \sigma) + o(n\n\lg(n + \sigma)) bits of space.
-  class SucPOSLP {
+  class SucPOSLP
+  {
   private:
-    //sunccinct data structure 
-    SucFBTree sfbt_; 
+    //sunccinct data structure
+    SucFBTree sfbt_;
     InnerLeaf inner_leaf_;
     OutLeaf outer_leaf_;
-    //buffer for this online construction 
+    //buffer for this online construction
     std::vector<uint64_t> buf_;
     uint64_t buf_size_;
     // # of production rules + # of alphabet symbols
@@ -75,19 +80,19 @@ namespace solca_comp {
     //output file name
     std::string output_file_name_;
     //data structure for reverse acessing to frequent production rules.
-    FreqCRDict  freq_crdict_;
-    
+    FreqCRDict freq_crdict_;
+
   public:
     //constructor and destructor
-    SucPOSLP(): sfbt_(), 
-		inner_leaf_(),
-		outer_leaf_(),
-		buf_(),
-		buf_size_(),
-		num_rules_(0),
-		output_file_name_(),
-		freq_crdict_(){};
-    ~SucPOSLP() {};
+    SucPOSLP() : sfbt_(),
+                 inner_leaf_(),
+                 outer_leaf_(),
+                 buf_(),
+                 buf_size_(),
+                 num_rules_(0),
+                 output_file_name_(),
+                 freq_crdict_(){};
+    ~SucPOSLP(){};
 
     //initialization and clear of data structures
     void Init(const std::string &kOutputFileName);
@@ -97,22 +102,22 @@ namespace solca_comp {
     //return # of production rules + # of alphabet symbols
     uint64_t NumRules() const;
 
-    //pushing back a new symbol to succint POSLP 
+    //pushing back a new symbol to succint POSLP
     inline void PushToBuffer(const uint64_t kVar);
-    void PushLastCP();
-    void     PushBuffers(const uint64_t kBufSize);
+    void PushLastCP(const bool kNaiveEncoding);
+    void PushBuffers(const uint64_t kBufSize);
     uint64_t PushInnerSFBT();
     uint64_t PushOuterSFBT();
-    
-    //accessing POSLP's tree 
+
+    //accessing POSLP's tree
     uint64_t Left(const uint64_t kVar);
     uint64_t Right(const uint64_t kVar);
-    uint64_t ParentOfInNode(const uint64_t kVar, 
-			    bool &is_left);
+    uint64_t ParentOfInNode(const uint64_t kVar,
+                            bool &is_left);
 
     //reverse access and update POSLP
-    Node     ReverseAccessAndUpdate(const Node   &kLeft, 
-				    const Node   &kRight);
+    Node ReverseAccessAndUpdate(const Node &kLeft,
+                                const Node &kRight);
 
     //space infromation
     uint64_t ByteSizeOfB() const;
@@ -126,33 +131,39 @@ namespace solca_comp {
 
     //save and load
     void Save(std::ofstream &ofs);
+    void SaveNaiveEncoding(std::ofstream &ofs);
     void Load(std::ifstream &ifs);
-  
+
   private:
     uint64_t AccessLeaf(const uint64_t kInd);
     //decompression method
     void Decode(const uint64_t kVar,
-		std::ofstream &ofs2);
+                std::ofstream &ofs2);
     // transformation of the variable of post order straight line program
     //to the variable of succinct full binary tree
     // and the reversed transformation
     inline uint64_t Var2SFBTVar(const uint64_t kVar);
-    inline uint64_t SFBTVar2Var(const uint64_t kVar);    
+    inline uint64_t SFBTVar2Var(const uint64_t kVar);
   }; // class SucPOSLP
   //inline implementations
-  inline uint64_t SucPOSLP::Var2SFBTVar(const uint64_t kVar) {
-    if (kVar < kAlphabetSize){
+  inline uint64_t SucPOSLP::Var2SFBTVar(const uint64_t kVar)
+  {
+    if (kVar < kAlphabetSize)
+    {
       return kDummyCode;
     }
     return kVar - kAlphabetSize;
   }
 
-  inline uint64_t SucPOSLP::SFBTVar2Var(const uint64_t kVar) {
+  inline uint64_t SucPOSLP::SFBTVar2Var(const uint64_t kVar)
+  {
     return kVar + kAlphabetSize;
   }
 
-  inline void SucPOSLP::PushToBuffer(const uint64_t kVar) {
-    if (kVar >= kAlphabetSize) {
+  inline void SucPOSLP::PushToBuffer(const uint64_t kVar)
+  {
+    if (kVar >= kAlphabetSize)
+    {
       buf_.pop_back();
       buf_.pop_back();
       buf_size_ -= 2;
@@ -164,4 +175,3 @@ namespace solca_comp {
 } // namespace solca_comp
 
 #endif // SUC_POSLP_HPP_
-
