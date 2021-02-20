@@ -10,19 +10,26 @@ This program uses [RSDic](https://code.google.com/archive/p/rsdic/) as a part of
 
 # executions
 ## compression
-    $ ./compress --input_file=string --output_file=string [options] ...   
-     options:  
-       -i, --input_file     input file name (string)  
-       -o, --output_file    output file name (string)  
-       -e, --erase_br       erase line break (bool [=0])  
-       -?, --help           print this message  
-
+```
+$ ./compress --input_file=string --output_file=string [options] ... 
+options:
+  -i, --input_file        input file name (string)
+  -o, --output_file       output file name (string)
+  -n, --naive_encoding    output the naive encoding of solca's grammar (bool [=0])
+  -e, --erase_br          erase line break (bool [=0])
+  -p, --print_logs        print logs (bool [=0])
+  -?, --help              print this message
+```
+ 
 ## decompression
-    $ ./decompress --compressed_file=string --output_file=string [options] ...   
-     options:  
-       -i, --compressed_file    compressed file name (string)  
-       -o, --output_file        output file name (string)  
-       -?, --help               print this message  
+```
+$ ./decompress --compressed_file=string --output_file=string [options] ... 
+options:
+  -i, --compressed_file    compressed file name (string)
+  -o, --output_file        output file name (string)
+  -n, --naive_encoding     decompress from the naive encoding of solca's grammar (bool [=0])
+  -?, --help               print this message
+```
   
 # experiments for [repetitive texts of Pizza & chili corpus](http://pizzachili.dcc.uchile.cl/repcorpus/real/)
 ## comparison methods

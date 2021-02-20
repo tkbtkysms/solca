@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
   cmdline::parser p;
   p.add<string>("compressed_file", 'i', "compressed file name", true);
   p.add<string>("output_file", 'o', "output file name", true);
-  p.add<bool>("naive_encoding", 'n', "decompress the naive encoding of solca's grammar", false, false);
+  p.add<bool>("naive_encoding", 'n', "decompress from the naive encoding of solca's grammar", false, false);
 
   p.parse_check(argc, argv);
   const string input_file = p.get<string>("compressed_file");
