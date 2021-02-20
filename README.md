@@ -40,6 +40,7 @@ $ ./compress -i input_file -o compressed_file
 $ ./decompress -i compressd_file -o decompressed_file
 ```
 ## build from input_file the SOLCA's grammar in succinct space and output the naive encoding of the SOLCA's grammar
+The naive encoding is a standard 4 byte integer array storing X_{l_1}X_{r_1} ... X_{l_n}X_{r_n} where X_{l_i}  and X_{r_i} is the variable representing of righthand size of X_i -> X_{l_i}X_{r_i} and n is the number of non-terminals.
 ```
 $ ./compress -i input_file -o compressed_file -n 1
 ```
